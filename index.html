@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -556,257 +557,6 @@
             }
         }
 
-        /* ===== NOVOS COMPONENTES ===== */
-        .search-input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.95em;
-            margin-bottom: 12px;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #4472C4;
-            background-color: #f0f7ff;
-        }
-
-        .btn-danger {
-            background: #f44336;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #d32f2f;
-        }
-
-        .badge-custom {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
-            background: #ede7f6;
-            color: #5e35b1;
-            font-size: 0.75em;
-            font-weight: 600;
-            margin-left: 6px;
-        }
-
-        .custom-food-form {
-            background: #f5f5f5;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 25px;
-        }
-
-        .custom-food-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 6px;
-            font-size: 0.9em;
-        }
-
-        .weight-log-form {
-            display: flex;
-            gap: 10px;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-
-        .weight-log-form .form-group {
-            flex: 1;
-            min-width: 110px;
-            margin-bottom: 0;
-        }
-
-        .weight-log-list {
-            max-height: 220px;
-            overflow-y: auto;
-            margin-top: 10px;
-        }
-
-        .weight-log-entry {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 10px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            margin-bottom: 6px;
-            font-size: 0.9em;
-        }
-
-        .plano-dia-refeicao {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-left: 4px solid #4472C4;
-        }
-
-        .plano-dia-refeicao.vazia {
-            opacity: 0.6;
-            border-left-color: #bbb;
-        }
-
-        .plano-dia-total {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-
-        .export-import-row {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .alert-box {
-            background: #ffebee;
-            border-left: 4px solid #f44336;
-            padding: 12px;
-            border-radius: 4px;
-            margin: 12px 0;
-            color: #c62828;
-            font-size: 0.9em;
-            line-height: 1.4;
-        }
-
-        .fibra-box {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 12px;
-            border-radius: 4px;
-            margin: 12px 0;
-            color: #2e7d32;
-            font-size: 0.9em;
-            line-height: 1.4;
-        }
-
-        /* ===== MODO ESCURO ===== */
-        body.dark-mode {
-            background: linear-gradient(135deg, #1f2937 0%, #0f172a 100%);
-        }
-
-        body.dark-mode .card,
-        body.dark-mode .modal-content,
-        body.dark-mode .custom-food-form,
-        body.dark-mode .plano-dia-refeicao,
-        body.dark-mode .weight-log-entry,
-        body.dark-mode .custom-food-list-item,
-        body.dark-mode .restricoes-container,
-        body.dark-mode .restricao-item {
-            background: #1e293b;
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .card h2,
-        body.dark-mode .card h3,
-        body.dark-mode .modal-header,
-        body.dark-mode .restricoes-container h3,
-        body.dark-mode .restricao-item strong,
-        body.dark-mode .ingrediente-info strong,
-        body.dark-mode label {
-            color: #93c5fd;
-        }
-
-        body.dark-mode .tab-button {
-            background: #334155;
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .tab-button.active {
-            background: #4472C4;
-            color: white;
-        }
-
-        body.dark-mode .btn-perfil {
-            background: #334155;
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .btn-secondary {
-            background: #334155;
-            color: #e2e8f0;
-        }
-
-        body.dark-mode input[type="text"],
-        body.dark-mode input[type="number"],
-        body.dark-mode select,
-        body.dark-mode .search-input {
-            background: #0f172a;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-
-        body.dark-mode input:focus,
-        body.dark-mode select:focus,
-        body.dark-mode .search-input:focus {
-            background-color: #16213a;
-            border-color: #4472C4;
-        }
-
-        body.dark-mode table {
-            color: #e2e8f0;
-        }
-
-        body.dark-mode th, body.dark-mode td {
-            border-color: #334155;
-        }
-
-        body.dark-mode tr:nth-child(even) td {
-            background-color: #17233a;
-        }
-
-        body.dark-mode .ingrediente-item {
-            background: #16213a;
-        }
-
-        body.dark-mode .ingrediente-info small,
-        body.dark-mode .restricao-item small,
-        body.dark-mode .ingrediente-qtd-label,
-        body.dark-mode .weight-log-entry,
-        body.dark-mode .custom-food-list-item {
-            color: #94a3b8;
-        }
-
-        body.dark-mode .info-box {
-            background: #16324a;
-            color: #93c5fd;
-            border-left-color: #2196F3;
-        }
-
-        body.dark-mode .observacao-box {
-            background: #3a2f0e;
-            color: #ffe08a;
-            border-left-color: #ffc107;
-        }
-
-        body.dark-mode .alert-box {
-            background: #3a1414;
-            color: #ff8a80;
-        }
-
-        body.dark-mode .fibra-box {
-            background: #142e17;
-            color: #a5d6a7;
-        }
-
-        body.dark-mode .badge-custom {
-            background: #3730a3;
-            color: #c7d2fe;
-        }
-
-        body.dark-mode .restricoes-container {
-            background: #16213a;
-        }
-
         @media (max-width: 480px) {
             .header h1 {
                 font-size: 1.4em;
@@ -833,14 +583,10 @@
         <div class="top-nav">
             <div class="tabs">
                 <button class="tab-button active" onclick="abrirAba('construtor')">🍽️ Construtor</button>
-                <button class="tab-button" onclick="abrirAba('planoDia')">📅 Plano do Dia</button>
                 <button class="tab-button" onclick="abrirAba('tabela')">📋 Tabela Nutricional</button>
                 <button class="tab-button" onclick="abrirAba('projecao')">📈 Projeção</button>
             </div>
-            <div style="display:flex; gap:8px;">
-                <button class="btn-perfil" onclick="toggleDarkMode()" id="btnDarkMode" title="Alternar modo escuro">🌙</button>
-                <button class="btn-perfil" onclick="abrirPerfil()" title="Editar perfil">👤</button>
-            </div>
+            <button class="btn-perfil" onclick="abrirPerfil()" title="Editar perfil">👤</button>
         </div>
 
         <!-- ABA 1: CONSTRUTOR -->
@@ -888,7 +634,6 @@
                         </div>
 
                         <h3>📝 Ingredientes (preencha quantidade se desejar):</h3>
-                        <input type="text" class="search-input" id="buscaIngrediente" placeholder="🔍 Buscar ingrediente..." oninput="filtrarIngredientes()">
                         <div id="ingredientesContainer"></div>
 
                         <button class="btn-primary" onclick="otimizarRefeicao()">
@@ -904,24 +649,10 @@
             </div>
         </div>
 
-        <!-- ABA PLANO DO DIA -->
-        <div id="planoDia" class="tab-content">
-            <div class="card">
-                <h2>📅 Plano do Dia</h2>
-                <div class="info-box">
-                    ℹ️ Aqui você vê a soma de todas as refeições já otimizadas no Construtor, comparadas com sua meta diária total. Refeições ainda não otimizadas aparecem como pendentes.
-                </div>
-                <div id="fibraAlvoBox"></div>
-                <div id="planoDiaContainer"></div>
-                <div id="planoDiaTotalContainer"></div>
-            </div>
-        </div>
-
         <!-- ABA 2: TABELA NUTRICIONAL -->
         <div id="tabela" class="tab-content">
             <div class="card">
                 <h2>📋 Tabela Nutricional dos Alimentos</h2>
-                <input type="text" class="search-input" id="buscaAlimento" placeholder="🔍 Buscar alimento..." oninput="filtrarTabelaAlimentos()">
                 <div class="tabela-nutricional">
                     <table>
                         <thead>
@@ -931,62 +662,10 @@
                                 <th>Proteína (g)</th>
                                 <th>Gordura (g)</th>
                                 <th>Carboidrato (g)</th>
-                                <th>Fonte</th>
                             </tr>
                         </thead>
                         <tbody id="corpoPabelaTabelaNutricional"></tbody>
                     </table>
-                </div>
-
-                <!-- LEGENDA DE FONTES -->
-                <div style="margin-top:15px;padding:12px 15px;background:#f9f9f9;border-radius:8px;font-size:0.9em;color:#555;line-height:1.6;">
-                    <strong>Sobre a coluna "Fonte":</strong><br>
-                    <span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#e8f5e9;color:#2e7d32;font-size:0.85em;font-weight:600;">TACO</span>
-                    — o alimento consta na Tabela Brasileira de Composição de Alimentos (NEPA/UNICAMP) exatamente no estado usado aqui, e os valores conferem com ela.<br>
-                    <span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#fff3e0;color:#e65100;font-size:0.85em;font-weight:600;">Rótulo</span>
-                    — valor do rótulo do fabricante. Usado para industrializados (whey, maionese) e também para itens que a TACO não traz no mesmo estado (ex.: cuscuz e batata só existem cozidos na TACO; aqui estão crus) ou cujos valores divergem da TACO (ovo, atum ao natural, sardinha drenada, pão de forma tradicional).<br>
-                    <small style="color:#888;">Obs.: os estados dos alimentos foram mantidos como cadastrados (ex.: cuscuz cru, arroz cozido) e as quantidades por unidade preservadas (ovo e banana por unidade), conforme solicitado.</small>
-                </div>
-
-                <!-- ALIMENTOS PERSONALIZADOS -->
-                <div class="custom-food-form">
-                    <h3>➕ Adicionar Alimento Personalizado</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="novoAlimentoNome">Nome:</label>
-                            <input type="text" id="novoAlimentoNome" placeholder="Ex: Peito de peru fatiado">
-                        </div>
-                        <div class="form-group">
-                            <label for="novoAlimentoUnidade">Unidade:</label>
-                            <select id="novoAlimentoUnidade" onchange="toggleUnidadeCustom()">
-                                <option value="g">g (por 100g)</option>
-                                <option value="ml">ml (por 100ml)</option>
-                                <option value="un">un (unidade fixa)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="novoAlimentoP">Proteína (g / 100g)</label>
-                            <input type="number" id="novoAlimentoP" step="0.1" min="0" placeholder="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="novoAlimentoG">Gordura (g / 100g)</label>
-                            <input type="number" id="novoAlimentoG" step="0.1" min="0" placeholder="0">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="novoAlimentoC">Carboidrato (g / 100g)</label>
-                            <input type="number" id="novoAlimentoC" step="0.1" min="0" placeholder="0">
-                        </div>
-                        <div class="form-group" id="novoAlimentoPesoGroup" style="display:none;">
-                            <label for="novoAlimentoPeso">Peso por unidade (g)</label>
-                            <input type="number" id="novoAlimentoPeso" step="1" min="1" placeholder="Ex: 50">
-                        </div>
-                    </div>
-                    <button class="btn-success" style="width:100%;" onclick="adicionarAlimentoCustom()">💾 Adicionar Alimento</button>
-                    <div id="listaAlimentosCustom" style="margin-top:12px;"></div>
                 </div>
 
                 <!-- SEÇÃO DE RESTRIÇÕES -->
@@ -1001,24 +680,6 @@
         <div id="projecao" class="tab-content">
             <div class="card">
                 <h2>📈 Projeção (52 Semanas)</h2>
-
-                <h3>⚖️ Registrar Peso Real</h3>
-                <div class="info-box">
-                    ℹ️ Registre seu peso a cada semana para comparar com a projeção teórica no gráfico abaixo.
-                </div>
-                <div class="weight-log-form">
-                    <div class="form-group">
-                        <label for="pesoLogSemana">Semana</label>
-                        <input type="number" id="pesoLogSemana" min="0" max="104" placeholder="Ex: 1">
-                    </div>
-                    <div class="form-group">
-                        <label for="pesoLogValor">Peso (kg)</label>
-                        <input type="number" id="pesoLogValor" step="0.1" min="30" max="250" placeholder="Ex: 74.5">
-                    </div>
-                    <button class="btn-success" onclick="adicionarPesoReal()">💾 Registrar</button>
-                </div>
-                <div class="weight-log-list" id="listaHistoricoPeso"></div>
-
                 <div class="chart-container">
                     <canvas id="chartProjecao"></canvas>
                 </div>
@@ -1099,17 +760,9 @@
                 <input type="number" id="deficitPerfil" min="200" max="1000" step="50">
             </div>
 
-            <div id="alertaDeficit"></div>
-
             <div style="display: flex; gap: 10px;">
                 <button class="btn-success" style="flex: 1;" onclick="salvarPerfil()">💾 Salvar</button>
                 <button class="btn-secondary" style="flex: 1;" onclick="fecharPerfil()">Cancelar</button>
-            </div>
-
-            <div class="export-import-row">
-                <button class="btn-secondary" style="flex:1;" onclick="exportarDados()">⬇️ Exportar dados</button>
-                <button class="btn-secondary" style="flex:1;" onclick="document.getElementById('importFileInput').click()">⬆️ Importar dados</button>
-                <input type="file" id="importFileInput" accept="application/json" style="display:none;" onchange="importarDados(event)">
             </div>
         </div>
     </div>
@@ -1117,30 +770,30 @@
     <script>
         // Alimentos com restrições
         const alimentos = {
-            cuscuz: { nome: 'Cuscuz de milho cru', p: 5.6, g: 1.4, c: 82.0, divisivel: true, unidade: 'g', minimo: 20, maximo: 100, fonte: 'Rótulo' },
-            arroz: { nome: 'Arroz branco cozido', p: 2.5, g: 0.2, c: 28.1, divisivel: true, unidade: 'g', minimo: 60, maximo: 200, fonte: 'TACO' },
-            feijao: { nome: 'Feijão carioca cozido', p: 4.8, g: 0.5, c: 13.6, divisivel: true, unidade: 'g', minimo: 60, maximo: 200, fonte: 'TACO' },
-            aveia: { nome: 'Aveia em flocos crua', p: 13.9, g: 8.5, c: 66.6, divisivel: true, unidade: 'g', minimo: 20, maximo: 60, fonte: 'TACO' },
-            banana: { nome: 'Banana-prata', p: 1.3, g: 0.1, c: 26.0, divisivel: false, unidade: 'un', peso: 100, maximo: 2, refTabela: '100 g', fonte: 'TACO' },
-            pao: { nome: 'Pão de forma tradicional', p: 8.8, g: 3.2, c: 48.0, divisivel: true, unidade: 'g', fonte: 'Rótulo' },
-            ovo: { nome: 'Ovo inteiro', p: 12.6, g: 9.6, c: 0.8, divisivel: false, unidade: 'un', peso: 50, maximo: 3, refTabela: '100 g', fonte: 'Rótulo' },
-            whey_vegano: { nome: 'Whey vegano (ervilha)', p: 80.0, g: 6.7, c: 3.3, divisivel: true, unidade: 'g', refTabela: '100 g', porcao: 30, fonte: 'Rótulo' },
-            whey_normal: { nome: 'Whey isolado Dux neutro', p: 80.0, g: 2.0, c: 2.7, divisivel: true, unidade: 'g', refTabela: '100 g', porcao: 30, fonte: 'Rótulo' },
-            frango: { nome: 'Peito de frango grelhado', p: 32.0, g: 2.5, c: 0, divisivel: true, unidade: 'g', fonte: 'TACO' },
-            patinho: { nome: 'Patinho sem gordura grelhado', p: 35.9, g: 7.3, c: 0, divisivel: true, unidade: 'g', fonte: 'TACO' },
-            acem: { nome: 'Acém cozido sem gordura visível', p: 27.3, g: 10.9, c: 0, divisivel: true, unidade: 'g', fonte: 'TACO' },
-            musculo: { nome: 'Músculo sem gordura cozido', p: 31.2, g: 6.7, c: 0, divisivel: true, unidade: 'g', fonte: 'TACO' },
-            bata_inglesa: { nome: 'Batata inglesa cozida', p: 1.2, g: 0.1, c: 11.9, divisivel: true, unidade: 'g', fonte: 'TACO' },
-            bata_frita: { nome: 'Batata in natura crua (para airfryer, sem óleo)', p: 2.0, g: 0.1, c: 17.5, divisivel: true, unidade: 'g', fonte: 'Rótulo' },
-            linhaca: { nome: 'Linhaça inteira', p: 14.1, g: 32.3, c: 43.3, divisivel: true, unidade: 'g', minimo: 20, maximo: 40, fonte: 'TACO' },
-            figado: { nome: 'Fígado bovino grelhado', p: 29.9, g: 9.0, c: 4.2, divisivel: true, unidade: 'g', fonte: 'TACO' },
-            coracao: { nome: 'Coração de galinha grelhado', p: 22.4, g: 12.1, c: 0.6, divisivel: true, unidade: 'g', fonte: 'TACO' },
-            atum: { nome: 'Atum sólido ao natural, drenado', p: 27.5, g: 2.7, c: 0, divisivel: true, unidade: 'g', maximo: 75, fonte: 'Rótulo' },
-            sardinha: { nome: 'Sardinha em óleo, drenada', p: 22.7, g: 11.5, c: 0, divisivel: true, unidade: 'g', maximo: 75, fonte: 'Rótulo' },
-            maionese_light: { nome: 'Maionese Hellmann\'s Light', p: 0, g: 15.0, c: 9.2, divisivel: true, unidade: 'g', opcional: true, fonte: 'Rótulo' },
-            maionese_tradicional: { nome: 'Maionese Hellmann\'s tradicional', p: 0, g: 30.8, c: 6.7, divisivel: true, unidade: 'g', opcional: true, fonte: 'Rótulo' },
-            manteiga: { nome: 'Manteiga', p: 0.7, g: 81.7, c: 0.1, divisivel: true, unidade: 'g', opcional: true, fonte: 'TACO' },
-            azeite: { nome: 'Azeite de oliva', p: 0, g: 100.0, c: 0, divisivel: true, unidade: 'ml', opcional: true, fonte: 'TACO' }
+            cuscuz: { nome: 'Cuscuz de milho cru', p: 5.6, g: 1.4, c: 82.0, divisivel: true, unidade: 'g', minimo: 20, maximo: 100 },
+            arroz: { nome: 'Arroz branco cozido', p: 2.5, g: 0.2, c: 28.1, divisivel: true, unidade: 'g', minimo: 60, maximo: 200 },
+            feijao: { nome: 'Feijão carioca cozido', p: 4.8, g: 0.5, c: 13.6, divisivel: true, unidade: 'g', minimo: 60, maximo: 200 },
+            aveia: { nome: 'Aveia em flocos crua', p: 13.9, g: 8.5, c: 66.6, divisivel: true, unidade: 'g', minimo: 20, maximo: 60 },
+            banana: { nome: 'Banana-prata', p: 1.3, g: 0.1, c: 26.0, divisivel: false, unidade: 'un', peso: 100, maximo: 2, refTabela: '100 g' },
+            pao: { nome: 'Pão de forma tradicional', p: 8.8, g: 3.2, c: 48.0, divisivel: true, unidade: 'g' },
+            ovo: { nome: 'Ovo inteiro', p: 12.6, g: 9.6, c: 0.8, divisivel: false, unidade: 'un', peso: 50, maximo: 3, refTabela: '100 g' },
+            whey_vegano: { nome: 'Whey vegano (ervilha)', p: 80.0, g: 6.7, c: 3.3, divisivel: true, unidade: 'g', refTabela: '100 g', porcao: 30 },
+            whey_normal: { nome: 'Whey isolado Dux neutro', p: 80.0, g: 2.0, c: 2.7, divisivel: true, unidade: 'g', refTabela: '100 g', porcao: 30 },
+            frango: { nome: 'Peito de frango grelhado', p: 32.0, g: 2.5, c: 0, divisivel: true, unidade: 'g' },
+            patinho: { nome: 'Patinho sem gordura grelhado', p: 35.9, g: 7.3, c: 0, divisivel: true, unidade: 'g' },
+            acem: { nome: 'Acém cozido sem gordura visível', p: 27.3, g: 10.9, c: 0, divisivel: true, unidade: 'g' },
+            musculo: { nome: 'Músculo sem gordura cozido', p: 31.2, g: 6.7, c: 0, divisivel: true, unidade: 'g' },
+            bata_inglesa: { nome: 'Batata inglesa cozida', p: 1.2, g: 0.1, c: 11.9, divisivel: true, unidade: 'g' },
+            bata_frita: { nome: 'Batata in natura crua (para airfryer, sem óleo)', p: 2.0, g: 0.1, c: 17.5, divisivel: true, unidade: 'g' },
+            linhaca: { nome: 'Linhaça inteira', p: 14.1, g: 32.3, c: 43.3, divisivel: true, unidade: 'g', minimo: 20, maximo: 40 },
+            figado: { nome: 'Fígado bovino grelhado', p: 29.9, g: 9.0, c: 4.2, divisivel: true, unidade: 'g' },
+            coracao: { nome: 'Coração de galinha grelhado', p: 22.4, g: 12.1, c: 0.6, divisivel: true, unidade: 'g' },
+            atum: { nome: 'Atum sólido ao natural, drenado', p: 27.5, g: 2.7, c: 0, divisivel: true, unidade: 'g', maximo: 75 },
+            sardinha: { nome: 'Sardinha em óleo, drenada', p: 22.7, g: 11.5, c: 0, divisivel: true, unidade: 'g', maximo: 75 },
+            maionese_light: { nome: 'Maionese Hellmann\'s Light', p: 0, g: 15.0, c: 9.2, divisivel: true, unidade: 'g', opcional: true },
+            maionese_tradicional: { nome: 'Maionese Hellmann\'s tradicional', p: 0, g: 30.8, c: 6.7, divisivel: true, unidade: 'g', opcional: true },
+            manteiga: { nome: 'Manteiga', p: 0.7, g: 81.7, c: 0.1, divisivel: true, unidade: 'g', opcional: true },
+            azeite: { nome: 'Azeite de oliva', p: 0, g: 100.0, c: 0, divisivel: true, unidade: 'ml', opcional: true }
         };
 
         // Dados de projeção fornecidos: perda acumulada por semana (52 semanas)
@@ -1210,368 +863,12 @@
         let chartInstance = null;
         let ingredientesComQuantidade = {};
         let qtdRefeicoesCurrent = 4;
-        let alimentosCustom = {};
-        let historicoPeso = [];
-        let planoDoDia = {};
 
         window.addEventListener('load', () => {
             carregarPerfil();
-            carregarAlimentosCustom();
-            carregarHistoricoPeso();
-            carregarPlanoDoDia();
-            carregarModoEscuro();
             criarTabelaTabelaNutricional();
             criarTabelaProjecao();
-            renderPlanoDoDia();
-            renderHistoricoPeso();
         });
-
-        // ===== MODO ESCURO =====
-        function carregarModoEscuro() {
-            const ativo = localStorage.getItem('modoEscuro') === '1';
-            if (ativo) {
-                document.body.classList.add('dark-mode');
-                document.getElementById('btnDarkMode').textContent = '☀️';
-            }
-        }
-
-        function toggleDarkMode() {
-            const ativo = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('modoEscuro', ativo ? '1' : '0');
-            document.getElementById('btnDarkMode').textContent = ativo ? '☀️' : '🌙';
-        }
-
-        // ===== ALIMENTOS PERSONALIZADOS =====
-        function carregarAlimentosCustom() {
-            const salvo = localStorage.getItem('alimentosCustom');
-            alimentosCustom = salvo ? JSON.parse(salvo) : {};
-            // Mescla no objeto principal 'alimentos' para que tabela, checkboxes e otimizador já os enxerguem
-            for (const [key, alimento] of Object.entries(alimentosCustom)) {
-                alimentos[key] = alimento;
-            }
-        }
-
-        function toggleUnidadeCustom() {
-            const unidade = document.getElementById('novoAlimentoUnidade').value;
-            document.getElementById('novoAlimentoPesoGroup').style.display = (unidade === 'un') ? 'block' : 'none';
-        }
-
-        function adicionarAlimentoCustom() {
-            const nome = document.getElementById('novoAlimentoNome').value.trim();
-            const unidade = document.getElementById('novoAlimentoUnidade').value;
-            const p = parseFloat(document.getElementById('novoAlimentoP').value);
-            const g = parseFloat(document.getElementById('novoAlimentoG').value);
-            const c = parseFloat(document.getElementById('novoAlimentoC').value);
-            const peso = parseFloat(document.getElementById('novoAlimentoPeso').value);
-
-            if (!nome) {
-                alert('Informe o nome do alimento.');
-                return;
-            }
-            if (isNaN(p) || isNaN(g) || isNaN(c)) {
-                alert('Preencha proteína, gordura e carboidrato (podem ser 0).');
-                return;
-            }
-            if (unidade === 'un' && (isNaN(peso) || peso <= 0)) {
-                alert('Informe o peso por unidade (em gramas) para alimentos contados por unidade.');
-                return;
-            }
-
-            const key = 'custom_' + nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') + '_' + Date.now().toString(36);
-
-            const novoAlimento = unidade === 'un'
-                ? { nome: nome, p, g, c, divisivel: false, unidade: 'un', peso: peso, refTabela: '100 g', fonte: 'Personalizado', custom: true }
-                : { nome: nome, p, g, c, divisivel: true, unidade: unidade, fonte: 'Personalizado', custom: true };
-
-            alimentosCustom[key] = novoAlimento;
-            alimentos[key] = novoAlimento;
-            localStorage.setItem('alimentosCustom', JSON.stringify(alimentosCustom));
-
-            document.getElementById('novoAlimentoNome').value = '';
-            document.getElementById('novoAlimentoP').value = '';
-            document.getElementById('novoAlimentoG').value = '';
-            document.getElementById('novoAlimentoC').value = '';
-            document.getElementById('novoAlimentoPeso').value = '';
-
-            criarTabelaTabelaNutricional();
-            gerarCheckboxIngredientes();
-            renderListaAlimentosCustom();
-        }
-
-        function removerAlimentoCustom(key) {
-            if (!confirm('Remover este alimento personalizado?')) return;
-            delete alimentosCustom[key];
-            delete alimentos[key];
-            localStorage.setItem('alimentosCustom', JSON.stringify(alimentosCustom));
-            criarTabelaTabelaNutricional();
-            gerarCheckboxIngredientes();
-            renderListaAlimentosCustom();
-        }
-
-        function renderListaAlimentosCustom() {
-            const container = document.getElementById('listaAlimentosCustom');
-            const entradas = Object.entries(alimentosCustom);
-            if (entradas.length === 0) {
-                container.innerHTML = '<small style="color:#888;">Nenhum alimento personalizado ainda.</small>';
-                return;
-            }
-            container.innerHTML = entradas.map(([key, a]) => `
-                <div class="custom-food-list-item">
-                    <span>${a.nome} <span class="badge-custom">Personalizado</span></span>
-                    <button class="btn-danger" style="padding:4px 10px; font-size:0.85em;" onclick="removerAlimentoCustom('${key}')">🗑️ Remover</button>
-                </div>
-            `).join('');
-        }
-
-        // ===== BUSCA / FILTROS =====
-        function filtrarIngredientes() {
-            const termo = document.getElementById('buscaIngrediente').value.toLowerCase();
-            document.querySelectorAll('#ingredientesContainer .ingrediente-item').forEach(item => {
-                const nome = (item.dataset.nome || '').toLowerCase();
-                item.style.display = nome.includes(termo) ? '' : 'none';
-            });
-        }
-
-        function filtrarTabelaAlimentos() {
-            const termo = document.getElementById('buscaAlimento').value.toLowerCase();
-            document.querySelectorAll('#corpoPabelaTabelaNutricional tr').forEach(tr => {
-                const nome = tr.dataset.nome || tr.cells[0].textContent.toLowerCase();
-                tr.style.display = nome.toLowerCase().includes(termo) ? '' : 'none';
-            });
-        }
-
-        // ===== HISTÓRICO DE PESO REAL =====
-        function carregarHistoricoPeso() {
-            const salvo = localStorage.getItem('historicoPeso');
-            historicoPeso = salvo ? JSON.parse(salvo) : [];
-        }
-
-        function adicionarPesoReal() {
-            const semana = parseInt(document.getElementById('pesoLogSemana').value);
-            const peso = parseFloat(document.getElementById('pesoLogValor').value);
-
-            if (isNaN(semana) || isNaN(peso)) {
-                alert('Preencha semana e peso corretamente.');
-                return;
-            }
-
-            historicoPeso = historicoPeso.filter(h => h.semana !== semana);
-            historicoPeso.push({ semana, peso });
-            historicoPeso.sort((a, b) => a.semana - b.semana);
-            localStorage.setItem('historicoPeso', JSON.stringify(historicoPeso));
-
-            document.getElementById('pesoLogSemana').value = '';
-            document.getElementById('pesoLogValor').value = '';
-
-            renderHistoricoPeso();
-            criarTabelaProjecao();
-        }
-
-        function removerPesoReal(semana) {
-            historicoPeso = historicoPeso.filter(h => h.semana !== semana);
-            localStorage.setItem('historicoPeso', JSON.stringify(historicoPeso));
-            renderHistoricoPeso();
-            criarTabelaProjecao();
-        }
-
-        function renderHistoricoPeso() {
-            const container = document.getElementById('listaHistoricoPeso');
-            if (historicoPeso.length === 0) {
-                container.innerHTML = '<small style="color:#888;">Nenhum peso registrado ainda.</small>';
-                return;
-            }
-            container.innerHTML = historicoPeso.map(h => `
-                <div class="weight-log-entry">
-                    <span><strong>Semana ${h.semana}:</strong> ${h.peso.toFixed(1)} kg</span>
-                    <button class="btn-danger" style="padding:3px 8px; font-size:0.8em;" onclick="removerPesoReal(${h.semana})">🗑️</button>
-                </div>
-            `).join('');
-        }
-
-        // ===== PLANO DO DIA =====
-        function carregarPlanoDoDia() {
-            const salvo = localStorage.getItem('planoDoDia');
-            planoDoDia = salvo ? JSON.parse(salvo) : {};
-        }
-
-        function salvarRefeicaoNoPlano(indexRefeicao, nomeRefeicao, resultado, macroAlvo) {
-            planoDoDia[indexRefeicao] = {
-                nome: nomeRefeicao,
-                totais: resultado.totais,
-                alvo: macroAlvo,
-                qtdRefeicoesContexto: qtdRefeicoesCurrent
-            };
-            localStorage.setItem('planoDoDia', JSON.stringify(planoDoDia));
-            renderPlanoDoDia();
-        }
-
-        function limparPlanoDoDia() {
-            if (!confirm('Limpar todas as refeições do plano do dia?')) return;
-            planoDoDia = {};
-            localStorage.removeItem('planoDoDia');
-            renderPlanoDoDia();
-        }
-
-        function calcularFibraAlvo(totalKcal) {
-            // Recomendação padrão: ~14g de fibra a cada 1000 kcal
-            return (totalKcal / 1000) * 14;
-        }
-
-        function renderPlanoDoDia() {
-            const container = document.getElementById('planoDiaContainer');
-            const totalContainer = document.getElementById('planoDiaTotalContainer');
-            const fibraBox = document.getElementById('fibraAlvoBox');
-            if (!container || !usuarioPerfil.peso) return;
-
-            const macrosDia = calcularMacros();
-            const nomes = nomeRefeicoes[qtdRefeicoesCurrent] || nomeRefeicoes[4];
-
-            // Só considera entradas do plano compatíveis com a configuração atual de refeições
-            const entradasValidas = Object.entries(planoDoDia).filter(([idx, e]) => e.qtdRefeicoesContexto === qtdRefeicoesCurrent);
-
-            let html = '';
-            let somaP = 0, somaG = 0, somaC = 0;
-            let refeicoesFeitas = 0;
-
-            nomes.forEach((nome, idx) => {
-                const entrada = planoDoDia[idx];
-                if (entrada && entrada.qtdRefeicoesContexto === qtdRefeicoesCurrent) {
-                    somaP += entrada.totais.p;
-                    somaG += entrada.totais.g;
-                    somaC += entrada.totais.c;
-                    refeicoesFeitas++;
-                    html += `<div class="plano-dia-refeicao">
-                        <strong>${nome}</strong>
-                        <div style="font-size:0.9em; margin-top:4px;">P: ${entrada.totais.p.toFixed(1)}g | G: ${entrada.totais.g.toFixed(1)}g | C: ${entrada.totais.c.toFixed(1)}g</div>
-                    </div>`;
-                } else {
-                    html += `<div class="plano-dia-refeicao vazia">
-                        <strong>${nome}</strong>
-                        <div style="font-size:0.85em; margin-top:4px;">⏳ Ainda não otimizada</div>
-                    </div>`;
-                }
-            });
-
-            container.innerHTML = html + (Object.keys(planoDoDia).length > 0 ? '<button class="btn-secondary" style="width:100%; margin-top:8px;" onclick="limparPlanoDoDia()">🗑️ Limpar plano do dia</button>' : '');
-
-            const totalKcal = (somaP * 4) + (somaG * 9) + (somaC * 4);
-            const metaKcal = (macrosDia.proteina * 4) + (macrosDia.gordura * 9) + (macrosDia.carbs * 4);
-
-            totalContainer.innerHTML = `
-                <div class="plano-dia-total">
-                    <h3 style="color:white; border:none; padding:0; margin-bottom:10px;">📊 Total do Dia (${refeicoesFeitas}/${nomes.length} refeições)</h3>
-                    <div class="macro-info">
-                        <div class="macro-info-item"><span><strong>Proteína:</strong> ${somaP.toFixed(1)}g (meta: ${macrosDia.proteina.toFixed(1)}g)</span></div>
-                        <div class="macro-info-item"><span><strong>Gordura:</strong> ${somaG.toFixed(1)}g (meta: ${macrosDia.gordura.toFixed(1)}g)</span></div>
-                        <div class="macro-info-item"><span><strong>Carboidratos:</strong> ${somaC.toFixed(1)}g (meta: ${macrosDia.carbs.toFixed(1)}g)</span></div>
-                        <div class="macro-info-item"><span><strong>Calorias:</strong> ${totalKcal.toFixed(0)} kcal (meta: ${metaKcal.toFixed(0)} kcal)</span></div>
-                    </div>
-                </div>
-            `;
-
-            const fibraAlvo = calcularFibraAlvo(metaKcal);
-            fibraBox.innerHTML = `<div class="fibra-box">🌾 <strong>Meta de fibra diária sugerida:</strong> ~${fibraAlvo.toFixed(0)}g (referência de ~14g por 1000 kcal ingeridas). Priorize vegetais, aveia, feijão e frutas para atingi-la.</div>`;
-        }
-
-        // ===== EXPORT / IMPORT =====
-        function exportarDados() {
-            const dados = {
-                versao: 1,
-                exportadoEm: new Date().toISOString(),
-                perfil: usuarioPerfil,
-                alimentosCustom: alimentosCustom,
-                historicoPeso: historicoPeso,
-                planoDoDia: planoDoDia
-            };
-            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `calculadora-dieta-backup-${new Date().toISOString().slice(0,10)}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        function importarDados(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const dados = JSON.parse(e.target.result);
-                    if (dados.perfil) {
-                        usuarioPerfil = dados.perfil;
-                        localStorage.setItem('perfilUsuario', JSON.stringify(usuarioPerfil));
-                    }
-                    if (dados.alimentosCustom) {
-                        alimentosCustom = dados.alimentosCustom;
-                        localStorage.setItem('alimentosCustom', JSON.stringify(alimentosCustom));
-                        for (const [key, alimento] of Object.entries(alimentosCustom)) {
-                            alimentos[key] = alimento;
-                        }
-                    }
-                    if (dados.historicoPeso) {
-                        historicoPeso = dados.historicoPeso;
-                        localStorage.setItem('historicoPeso', JSON.stringify(historicoPeso));
-                    }
-                    if (dados.planoDoDia) {
-                        planoDoDia = dados.planoDoDia;
-                        localStorage.setItem('planoDoDia', JSON.stringify(planoDoDia));
-                    }
-
-                    preencherPerfil();
-                    criarTabelaTabelaNutricional();
-                    gerarCheckboxIngredientes();
-                    renderListaAlimentosCustom();
-                    renderHistoricoPeso();
-                    criarTabelaProjecao();
-                    renderPlanoDoDia();
-
-                    alert('Dados importados com sucesso!');
-                    fecharPerfil();
-                } catch (err) {
-                    alert('Erro ao importar arquivo: ' + err.message);
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
-        }
-
-        // ===== VALIDAÇÃO DE DÉFICIT SEGURO =====
-        function checarDeficitSeguro() {
-            const alertaDiv = document.getElementById('alertaDeficit');
-            if (!alertaDiv) return;
-
-            const peso = parseFloat(document.getElementById('pesoPerfil').value);
-            const altura = parseFloat(document.getElementById('alturaPerfil').value);
-            const idade = parseFloat(document.getElementById('idadePerfil').value);
-            const sexo = document.getElementById('sexoPerfil').value;
-            const atividade = document.getElementById('atividadePerfil').value;
-            const deficit = parseFloat(document.getElementById('deficitPerfil').value);
-
-            if (isNaN(peso) || isNaN(altura) || isNaN(idade) || isNaN(deficit)) {
-                alertaDiv.innerHTML = '';
-                return;
-            }
-
-            let tmb;
-            if (sexo === 'M') {
-                tmb = (10 * peso) + (6.25 * altura) - (5 * idade) + 5;
-            } else {
-                tmb = (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
-            }
-            const tdee = tmb * getFatorAtividade(atividade);
-            const percentualDeficit = (deficit / tdee) * 100;
-
-            if (percentualDeficit > 25) {
-                alertaDiv.innerHTML = `<div class="alert-box">⚠️ <strong>Déficit agressivo:</strong> ${deficit} kcal representa ${percentualDeficit.toFixed(0)}% do seu gasto total estimado (${tdee.toFixed(0)} kcal). Déficits acima de 25% do TDEE aumentam o risco de perda de massa magra e fadiga. Considere reduzir o déficit.</div>`;
-            } else {
-                alertaDiv.innerHTML = '';
-            }
-        }
 
         function abrirAba(abaName) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -1591,7 +888,6 @@
 
             for (const [key, alimento] of alimentosOrdenados) {
                 const tr = document.createElement('tr');
-                tr.dataset.nome = alimento.nome.toLowerCase();
                 // Referência de exibição: usa refTabela quando definido, senão 100g/100un
                 let referencia;
                 if (alimento.refTabela) {
@@ -1605,36 +901,17 @@
                     notaPorcao = ` <small style="color:#888;">(porção ${alimento.porcao}g)</small>`;
                 }
 
-                // Fonte do dado (TACO ou Rótulo)
-                const fonte = alimento.fonte || '—';
-                let fonteBadge;
-                if (fonte === 'TACO') {
-                    fonteBadge = `<span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#e8f5e9;color:#2e7d32;font-size:0.8em;font-weight:600;">TACO</span>`;
-                } else if (fonte === 'Rótulo') {
-                    fonteBadge = `<span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#fff3e0;color:#e65100;font-size:0.8em;font-weight:600;">Rótulo</span>`;
-                } else if (fonte === 'Personalizado') {
-                    fonteBadge = `<span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#ede7f6;color:#5e35b1;font-size:0.8em;font-weight:600;">Personalizado</span>`;
-                } else {
-                    fonteBadge = fonte;
-                }
-
-                const btnRemover = alimento.custom
-                    ? ` <button class="btn-danger" style="padding:2px 6px; font-size:0.75em; margin-left:4px;" onclick="removerAlimentoCustom('${key}')" title="Remover alimento personalizado">🗑️</button>`
-                    : '';
-
                 tr.innerHTML = `
-                    <td>${alimento.nome}${notaPorcao}${btnRemover}</td>
+                    <td>${alimento.nome}${notaPorcao}</td>
                     <td>${referencia}</td>
                     <td>${alimento.p.toFixed(1)}</td>
                     <td>${alimento.g.toFixed(1)}</td>
                     <td>${alimento.c.toFixed(1)}</td>
-                    <td>${fonteBadge}</td>
                 `;
                 tbody.appendChild(tr);
             }
 
             criarSecaoRestricoes();
-            renderListaAlimentosCustom();
         }
 
         function criarSecaoRestricoes() {
@@ -1683,7 +960,6 @@
             
             document.getElementById('macroAlvoContainer').style.display = 'none';
             ingredientesComQuantidade = {};
-            renderPlanoDoDia();
         }
 
         function abrirPerfil() {
@@ -1723,13 +999,6 @@
             document.getElementById('gorduraPerfil').value = usuarioPerfil.gordura || 33;
             document.getElementById('atividadePerfil').value = usuarioPerfil.atividade || 'Moderado';
             document.getElementById('deficitPerfil').value = usuarioPerfil.deficit || 400;
-
-            ['sexoPerfil', 'idadePerfil', 'alturaPerfil', 'pesoPerfil', 'atividadePerfil', 'deficitPerfil'].forEach(id => {
-                const el = document.getElementById(id);
-                el.oninput = checarDeficitSeguro;
-                el.onchange = checarDeficitSeguro;
-            });
-            checarDeficitSeguro();
         }
 
         function salvarPerfil() {
@@ -1745,7 +1014,6 @@
             };
             localStorage.setItem('perfilUsuario', JSON.stringify(usuarioPerfil));
             criarTabelaProjecao();
-            renderPlanoDoDia();
             fecharPerfil();
         }
 
@@ -1824,8 +1092,6 @@
             document.getElementById('alvoGordura').value = macroAlvo.g.toFixed(1) + 'g';
             document.getElementById('alvoCarbs').value = macroAlvo.c.toFixed(1) + 'g';
             document.getElementById('macroAlvoContainer').style.display = 'block';
-            const buscaEl = document.getElementById('buscaIngrediente');
-            if (buscaEl) buscaEl.value = '';
             gerarCheckboxIngredientes();
             ingredientesComQuantidade = {};
         }
@@ -1839,7 +1105,6 @@
                 
                 const div = document.createElement('div');
                 div.className = 'ingrediente-item';
-                div.dataset.nome = alimento.nome.toLowerCase();
                 
                 const unidadeLabel = alimento.divisivel ? `g` : `${alimento.unidade}`;
                 const placeholderText = alimento.divisivel ? 'gramas' : `quantidades`;
@@ -1863,7 +1128,7 @@
                         <input type="checkbox" id="ing_${key}" value="${key}" onchange="atualizarQuantidade('${key}')">
                     </div>
                     <div class="ingrediente-info">
-                        <strong>${alimento.nome}${alimento.custom ? ' <span class="badge-custom">Personalizado</span>' : ''}</strong>
+                        <strong>${alimento.nome}</strong>
                         <small>${macrosTexto}</small>
                     </div>
                     <div class="ingrediente-qtd" id="qtd_${key}" style="display:none;">
@@ -1913,11 +1178,8 @@
                 return;
             }
 
-            const indexRefeicao = parseInt(document.getElementById('refeicaoSelecionada').value);
-            const nomeRefeicao = nomeRefeicoes[qtdRefeicoesCurrent][indexRefeicao];
-
             const resultado = encontrarQuantidades(ingredientesSelecionados, macroAlvo, quantidadesEspecificas);
-            mostrarResultado(resultado, macroAlvo, indexRefeicao, nomeRefeicao);
+            mostrarResultado(resultado, macroAlvo);
         }
 
         function encontrarQuantidades(ingredientes, alvo, quantidadesEspecificas = {}) {
@@ -2241,7 +1503,7 @@
             return 'desvio-ruim';
         }
 
-        function mostrarResultado(resultado, macroAlvo, indexRefeicao, nomeRefeicao) {
+        function mostrarResultado(resultado, macroAlvo) {
             const container = document.getElementById('resultadoOtimizado');
 
             // Contar ingredientes com quantidade > 0
@@ -2353,10 +1615,6 @@
             }
 
             container.innerHTML = html;
-
-            if (!isNaN(indexRefeicao) && nomeRefeicao) {
-                salvarRefeicaoNoPlano(indexRefeicao, nomeRefeicao, resultado, macroAlvo);
-            }
         }
 
         function criarTabelaProjecao() {
@@ -2396,55 +1654,29 @@
                 labels.push(`${dado.semana}`);
             }
 
-            // Mapear o histórico de peso real (registrado pelo usuário) para o eixo de 52 semanas
-            const dadosReais = projecaoDados.map(dado => {
-                const registro = historicoPeso.find(h => h.semana === dado.semana);
-                return registro ? registro.peso : null;
-            });
-            const temPesoReal = historicoPeso.length > 0;
-
             const ctx = document.getElementById('chartProjecao').getContext('2d');
 
             if (chartInstance) {
                 chartInstance.destroy();
             }
 
-            const datasets = [{
-                label: 'Projeção teórica (kg)',
-                data: dados,
-                borderColor: '#4472C4',
-                backgroundColor: 'rgba(68, 114, 196, 0.1)',
-                borderWidth: 1.5,
-                tension: 0.1,
-                fill: true,
-                pointRadius: 1.5,
-                pointBackgroundColor: '#4472C4',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 0
-            }];
-
-            if (temPesoReal) {
-                datasets.push({
-                    label: 'Peso real registrado (kg)',
-                    data: dadosReais,
-                    borderColor: '#51cf66',
-                    backgroundColor: 'rgba(81, 207, 102, 0.15)',
-                    borderWidth: 2,
-                    tension: 0.1,
-                    fill: false,
-                    spanGaps: true,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#51cf66',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 1
-                });
-            }
-
             chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels,
-                    datasets: datasets
+                    datasets: [{
+                        label: 'Peso (kg)',
+                        data: dados,
+                        borderColor: '#4472C4',
+                        backgroundColor: 'rgba(68, 114, 196, 0.1)',
+                        borderWidth: 1.5,
+                        tension: 0.1,
+                        fill: true,
+                        pointRadius: 1.5,
+                        pointBackgroundColor: '#4472C4',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 0
+                    }]
                 },
                 options: {
                     responsive: true,
@@ -2456,8 +1688,7 @@
                             intersect: false,
                             callbacks: {
                                 label: function(context) {
-                                    if (context.parsed.y === null || context.parsed.y === undefined) return null;
-                                    return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + ' kg';
+                                    return 'Peso: ' + context.parsed.y.toFixed(2) + ' kg';
                                 }
                             }
                         }
