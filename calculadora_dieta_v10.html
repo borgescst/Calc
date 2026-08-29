@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Dieta v9 - Otimizada</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 8px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 1.8em;
+            margin-bottom: 3px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.85em;
+            min-width: 90px;
+        }
+
+        .tab-button.active {
+            background: #4472C4;
+            color: white;
+        }
+
+        .btn-perfil {
+            background: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 1.2em;
+            color: #203864;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4472C4;
+        }
+
+        .card h3 {
+            font-size: 1em;
+            color: #203864;
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #4472C4;
+            background-color: #f0f7ff;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .btn-primary {
+            background: #4472C4;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #3860a0;
+        }
+
+        .btn-success {
+            background: #51cf66;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15px auto;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #203864;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            color: #999;
+            padding: 0;
+            width: 35px;
+            height: 35px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 12px 0;
+            color: #1565c0;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .ingrediente-item {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .ingrediente-checkbox {
+            flex: 0 0 auto;
+        }
+
+        .ingrediente-checkbox input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .ingrediente-info {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .ingrediente-info strong {
+            display: block;
+            color: #203864;
+            margin-bottom: 3px;
+        }
+
+        .ingrediente-info small {
+            display: block;
+            color: #666;
+            font-size: 0.8em;
+            line-height: 1.3;
+        }
+
+        .ingrediente-qtd {
+            flex: 0 0 auto;
+            min-width: 120px;
+        }
+
+        .ingrediente-qtd input {
+            width: 110px;
+            font-size: 0.9em;
+            padding: 6px;
+        }
+
+        .ingrediente-qtd-label {
+            display: block;
+            font-size: 0.75em;
+            color: #999;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+
+        .resultado-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .resultado-item {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 6px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .resultado-item-nome {
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .resultado-item-quantidade {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: black;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-top: 5px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .resultado-item-sugestao {
+            font-size: 0.85em;
+            color: #ffeb3b;
+            margin-top: 5px;
+            width: 100%;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .macro-info {
+            background: rgba(255,255,255,0.15);
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+            font-size: 0.9em;
+        }
+
+        .macro-info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+        }
+
+        .macro-info-valor {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .macro-info-desvio {
+            font-size: 0.85em;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .desvio-excelente {
+            background: #4caf50;
+            color: white;
+        }
+
+        .desvio-aceitavel {
+            background: #ff9800;
+            color: white;
+        }
+
+        .desvio-ruim {
+            background: #f44336;
+            color: white;
+        }
+
+        .observacao-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            border-radius: 4px;
+            margin-top: 12px;
+            color: #856404;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            margin-top: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.85em;
+        }
+
+        thead {
+            background-color: #4472C4;
+            color: white;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f8f9fa;
+        }
+
+        .tabela-nutricional {
+            overflow-x: auto;
+        }
+
+        .tabela-nutricional table {
+            font-size: 0.8em;
+        }
+
+        .restricoes-container {
+            margin-top: 30px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .restricoes-container h3 {
+            color: #203864;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            border-bottom: 2px solid #4472C4;
+            padding-bottom: 10px;
+        }
+
+        .restricoes-lista {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .restricao-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #4472C4;
+        }
+
+        .restricao-item strong {
+            display: block;
+            color: #203864;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .restricao-item small {
+            display: block;
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .tab-button {
+                width: 100%;
+                padding: 12px;
+                font-size: 0.9em;
+            }
+
+            .btn-perfil {
+                width: 100%;
+                padding: 12px;
+            }
+
+            .ingrediente-item {
+                flex-direction: column;
+            }
+
+            .ingrediente-qtd {
+                width: 100%;
+            }
+
+            .ingrediente-qtd input {
+                width: 100%;
+            }
+
+            .card {
+                padding: 12px;
+            }
+
+            .modal-content {
+                margin: 30% auto;
+                width: 95%;
+            }
+
+            table {
+                font-size: 0.75em;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            .macro-info-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .macro-info-valor {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .macro-info-desvio {
+                width: 100%;
+                text-align: center;
+            }
+
+            .restricoes-lista {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== NOVOS COMPONENTES ===== */
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95em;
+            margin-bottom: 12px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #4472C4;
+            background-color: #f0f7ff;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .badge-custom {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: #ede7f6;
+            color: #5e35b1;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .custom-food-form {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+
+        .custom-food-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+        }
+
+        .weight-log-form {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .weight-log-form .form-group {
+            flex: 1;
+            min-width: 110px;
+            margin-bottom: 0;
+        }
+
+        .weight-log-list {
+            max-height: 220px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+
+        .weight-log-entry {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+        }
+
+        .plano-dia-refeicao {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4472C4;
+        }
+
+        .plano-dia-refeicao.vazia {
+            opacity: 0.6;
+            border-left-color: #bbb;
+        }
+
+        .plano-dia-total {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .export-import-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .alert-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 12px 0;
+            color: #c62828;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .fibra-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 12px;
+            border-radius: 4px;
+            margin: 12px 0;
+            color: #2e7d32;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        /* ===== MODO ESCURO ===== */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1f2937 0%, #0f172a 100%);
+        }
+
+        body.dark-mode .card,
+        body.dark-mode .modal-content,
+        body.dark-mode .custom-food-form,
+        body.dark-mode .plano-dia-refeicao,
+        body.dark-mode .weight-log-entry,
+        body.dark-mode .custom-food-list-item,
+        body.dark-mode .restricoes-container,
+        body.dark-mode .restricao-item {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .card h2,
+        body.dark-mode .card h3,
+        body.dark-mode .modal-header,
+        body.dark-mode .restricoes-container h3,
+        body.dark-mode .restricao-item strong,
+        body.dark-mode .ingrediente-info strong,
+        body.dark-mode label {
+            color: #93c5fd;
+        }
+
+        body.dark-mode .tab-button {
+            background: #334155;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .tab-button.active {
+            background: #4472C4;
+            color: white;
+        }
+
+        body.dark-mode .btn-perfil {
+            background: #334155;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .btn-secondary {
+            background: #334155;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode input[type="text"],
+        body.dark-mode input[type="number"],
+        body.dark-mode select,
+        body.dark-mode .search-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode input:focus,
+        body.dark-mode select:focus,
+        body.dark-mode .search-input:focus {
+            background-color: #16213a;
+            border-color: #4472C4;
+        }
+
+        body.dark-mode table {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode th, body.dark-mode td {
+            border-color: #334155;
+        }
+
+        body.dark-mode tr:nth-child(even) td {
+            background-color: #17233a;
+        }
+
+        body.dark-mode .ingrediente-item {
+            background: #16213a;
+        }
+
+        body.dark-mode .ingrediente-info small,
+        body.dark-mode .restricao-item small,
+        body.dark-mode .ingrediente-qtd-label,
+        body.dark-mode .weight-log-entry,
+        body.dark-mode .custom-food-list-item {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .info-box {
+            background: #16324a;
+            color: #93c5fd;
+            border-left-color: #2196F3;
+        }
+
+        body.dark-mode .observacao-box {
+            background: #3a2f0e;
+            color: #ffe08a;
+            border-left-color: #ffc107;
+        }
+
+        body.dark-mode .alert-box {
+            background: #3a1414;
+            color: #ff8a80;
+        }
+
+        body.dark-mode .fibra-box {
+            background: #142e17;
+            color: #a5d6a7;
+        }
+
+        body.dark-mode .badge-custom {
+            background: #3730a3;
+            color: #c7d2fe;
+        }
+
+        body.dark-mode .restricoes-container {
+            background: #16213a;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4em;
+            }
+
+            .card h2 {
+                font-size: 1.1em;
+            }
+
+            .tab-button {
+                font-size: 0.8em;
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏋️ PAINEL DE MACROS DA REFEIÇÃO</h1>
+            <p>Otimizador Inteligente v2</p>
+        </div>
+
+        <div class="top-nav">
+            <div class="tabs">
+                <button class="tab-button active" onclick="abrirAba('construtor')">🍽️ Construtor</button>
+                <button class="tab-button" onclick="abrirAba('planoDia')">📅 Plano do Dia</button>
+                <button class="tab-button" onclick="abrirAba('tabela')">📋 Tabela Nutricional</button>
+                <button class="tab-button" onclick="abrirAba('projecao')">📈 Projeção</button>
+            </div>
+            <div style="display:flex; gap:8px;">
+                <button class="btn-perfil" onclick="toggleDarkMode()" id="btnDarkMode" title="Alternar modo escuro">🌙</button>
+                <button class="btn-perfil" onclick="abrirPerfil()" title="Editar perfil">👤</button>
+            </div>
+        </div>
+
+        <!-- ABA 1: CONSTRUTOR -->
+        <div id="construtor" class="tab-content active">
+            <div class="content-grid">
+                <div class="card">
+                    <h2>🍽️ Construtor</h2>
+
+                    <div class="info-box">
+                        ℹ️ Escolha quantidade de refeições, marque ingredientes e preencha quantidade desejada (opcional).
+                    </div>
+
+                    <div class="form-group">
+                        <label for="qtdRefeicoes"><strong>Quantidade de Refeições:</strong></label>
+                        <select id="qtdRefeicoes" onchange="atualizarQuantidadeRefeicoes()">
+                            <option value="3">3 refeições</option>
+                            <option value="4" selected>4 refeições</option>
+                            <option value="5">5 refeições</option>
+                            <option value="6">6 refeições</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="refeicaoSelecionada"><strong>Refeição:</strong></label>
+                        <select id="refeicaoSelecionada" onchange="atualizarRefeicaoAlvo()">
+                            <option value="">-- Selecione --</option>
+                        </select>
+                    </div>
+
+                    <div id="macroAlvoContainer" style="display:none;">
+                        <h3>🎯 Macros Alvo:</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Proteína (g)</label>
+                                <input type="text" id="alvoProteina" readonly style="background: #f0f0f0; font-weight: bold;">
+                            </div>
+                            <div class="form-group">
+                                <label>Gordura (g)</label>
+                                <input type="text" id="alvoGordura" readonly style="background: #f0f0f0; font-weight: bold;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Carboidratos (g)</label>
+                            <input type="text" id="alvoCarbs" readonly style="background: #f0f0f0; font-weight: bold;">
+                        </div>
+
+                        <h3>📝 Ingredientes (preencha quantidade se desejar):</h3>
+                        <input type="text" class="search-input" id="buscaIngrediente" placeholder="🔍 Buscar ingrediente..." oninput="filtrarIngredientes()">
+                        <div id="ingredientesContainer"></div>
+
+                        <button class="btn-primary" onclick="otimizarRefeicao()">
+                            🔍 Otimizar Refeição
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>✅ Refeição Otimizada</h2>
+                    <div id="resultadoOtimizado"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA PLANO DO DIA -->
+        <div id="planoDia" class="tab-content">
+            <div class="card">
+                <h2>📅 Plano do Dia</h2>
+                <div class="info-box">
+                    ℹ️ Aqui você vê a soma de todas as refeições já otimizadas no Construtor, comparadas com sua meta diária total. Refeições ainda não otimizadas aparecem como pendentes.
+                </div>
+                <div id="fibraAlvoBox"></div>
+                <div id="planoDiaContainer"></div>
+                <div id="planoDiaTotalContainer"></div>
+            </div>
+        </div>
+
+        <!-- ABA 2: TABELA NUTRICIONAL -->
+        <div id="tabela" class="tab-content">
+            <div class="card">
+                <h2>📋 Tabela Nutricional dos Alimentos</h2>
+                <input type="text" class="search-input" id="buscaAlimento" placeholder="🔍 Buscar alimento..." oninput="filtrarTabelaAlimentos()">
+                <div class="tabela-nutricional">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Alimento</th>
+                                <th>Unidade</th>
+                                <th>Proteína (g)</th>
+                                <th>Gordura (g)</th>
+                                <th>Carboidrato (g)</th>
+                                <th>Fonte</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpoPabelaTabelaNutricional"></tbody>
+                    </table>
+                </div>
+
+                <!-- LEGENDA DE FONTES -->
+                <div style="margin-top:15px;padding:12px 15px;background:#f9f9f9;border-radius:8px;font-size:0.9em;color:#555;line-height:1.6;">
+                    <strong>Sobre a coluna "Fonte":</strong><br>
+                    <span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#e8f5e9;color:#2e7d32;font-size:0.85em;font-weight:600;">TACO</span>
+                    — o alimento consta na Tabela Brasileira de Composição de Alimentos (NEPA/UNICAMP) exatamente no estado usado aqui, e os valores conferem com ela.<br>
+                    <span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#fff3e0;color:#e65100;font-size:0.85em;font-weight:600;">Rótulo</span>
+                    — valor do rótulo do fabricante. Usado para industrializados (whey, maionese) e também para itens que a TACO não traz no mesmo estado (ex.: cuscuz e batata só existem cozidos na TACO; aqui estão crus) ou cujos valores divergem da TACO (ovo, atum ao natural, sardinha drenada, pão de forma tradicional).<br>
+                    <small style="color:#888;">Obs.: os estados dos alimentos foram mantidos como cadastrados (ex.: cuscuz cru, arroz cozido) e as quantidades por unidade preservadas (ovo e banana por unidade), conforme solicitado.</small>
+                </div>
+
+                <!-- ALIMENTOS PERSONALIZADOS -->
+                <div class="custom-food-form">
+                    <h3>➕ Adicionar Alimento Personalizado</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="novoAlimentoNome">Nome:</label>
+                            <input type="text" id="novoAlimentoNome" placeholder="Ex: Peito de peru fatiado">
+                        </div>
+                        <div class="form-group">
+                            <label for="novoAlimentoUnidade">Unidade:</label>
+                            <select id="novoAlimentoUnidade" onchange="toggleUnidadeCustom()">
+                                <option value="g">g (por 100g)</option>
+                                <option value="ml">ml (por 100ml)</option>
+                                <option value="un">un (unidade fixa)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="novoAlimentoP">Proteína (g / 100g)</label>
+                            <input type="number" id="novoAlimentoP" step="0.1" min="0" placeholder="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="novoAlimentoG">Gordura (g / 100g)</label>
+                            <input type="number" id="novoAlimentoG" step="0.1" min="0" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="novoAlimentoC">Carboidrato (g / 100g)</label>
+                            <input type="number" id="novoAlimentoC" step="0.1" min="0" placeholder="0">
+                        </div>
+                        <div class="form-group" id="novoAlimentoPesoGroup" style="display:none;">
+                            <label for="novoAlimentoPeso">Peso por unidade (g)</label>
+                            <input type="number" id="novoAlimentoPeso" step="1" min="1" placeholder="Ex: 50">
+                        </div>
+                    </div>
+                    <button class="btn-success" style="width:100%;" onclick="adicionarAlimentoCustom()">💾 Adicionar Alimento</button>
+                    <div id="listaAlimentosCustom" style="margin-top:12px;"></div>
+                </div>
+
+                <!-- SEÇÃO DE RESTRIÇÕES -->
+                <div class="restricoes-container">
+                    <h3>⚙️ Considerações e Restrições</h3>
+                    <div class="restricoes-lista" id="restricoesContainer"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 3: PROJEÇÃO -->
+        <div id="projecao" class="tab-content">
+            <div class="card">
+                <h2>📈 Projeção (52 Semanas)</h2>
+
+                <h3>⚖️ Registrar Peso Real</h3>
+                <div class="info-box">
+                    ℹ️ Registre seu peso a cada semana para comparar com a projeção teórica no gráfico abaixo.
+                </div>
+                <div class="weight-log-form">
+                    <div class="form-group">
+                        <label for="pesoLogSemana">Semana</label>
+                        <input type="number" id="pesoLogSemana" min="0" max="104" placeholder="Ex: 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="pesoLogValor">Peso (kg)</label>
+                        <input type="number" id="pesoLogValor" step="0.1" min="30" max="250" placeholder="Ex: 74.5">
+                    </div>
+                    <button class="btn-success" onclick="adicionarPesoReal()">💾 Registrar</button>
+                </div>
+                <div class="weight-log-list" id="listaHistoricoPeso"></div>
+
+                <div class="chart-container">
+                    <canvas id="chartProjecao"></canvas>
+                </div>
+
+                <table id="tabelaProjecao">
+                    <thead>
+                        <tr>
+                            <th>Semana</th>
+                            <th>Perda Semanal</th>
+                            <th>Perda Acum.</th>
+                            <th>Peso (kg)</th>
+                            <th>Observação Fisiológica</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaProjecao"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PERFIL -->
+    <div id="modalPerfil" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>👤 Seu Perfil</span>
+                <button class="close-btn" onclick="fecharPerfil()">✕</button>
+            </div>
+
+            <div class="form-group">
+                <label for="nomePerfil"><strong>Nome:</strong></label>
+                <input type="text" id="nomePerfil" placeholder="Seu nome">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sexoPerfil"><strong>Sexo:</strong></label>
+                    <select id="sexoPerfil">
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="idadePerfil"><strong>Idade:</strong></label>
+                    <input type="number" id="idadePerfil" min="15" max="100">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="alturaPerfil"><strong>Altura (cm):</strong></label>
+                    <input type="number" id="alturaPerfil" min="140" max="220">
+                </div>
+                <div class="form-group">
+                    <label for="pesoPerfil"><strong>Peso (kg):</strong></label>
+                    <input type="number" id="pesoPerfil" min="40" max="200" step="0.1">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gorduraPerfil"><strong>% Gordura:</strong></label>
+                    <input type="number" id="gorduraPerfil" min="5" max="50" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="atividadePerfil"><strong>Atividade:</strong></label>
+                    <select id="atividadePerfil">
+                        <option value="Sedentário">Sedentário</option>
+                        <option value="Leve">Leve</option>
+                        <option value="Moderado">Moderado</option>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Muito Ativo">Muito Ativo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="deficitPerfil"><strong>Déficit (kcal):</strong></label>
+                <input type="number" id="deficitPerfil" min="200" max="1000" step="50">
+            </div>
+
+            <div id="alertaDeficit"></div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-success" style="flex: 1;" onclick="salvarPerfil()">💾 Salvar</button>
+                <button class="btn-secondary" style="flex: 1;" onclick="fecharPerfil()">Cancelar</button>
+            </div>
+
+            <div class="export-import-row">
+                <button class="btn-secondary" style="flex:1;" onclick="exportarDados()">⬇️ Exportar dados</button>
+                <button class="btn-secondary" style="flex:1;" onclick="document.getElementById('importFileInput').click()">⬆️ Importar dados</button>
+                <input type="file" id="importFileInput" accept="application/json" style="display:none;" onchange="importarDados(event)">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Alimentos com restrições
+        const alimentos = {
+            cuscuz: { nome: 'Cuscuz de milho cru', p: 5.6, g: 1.4, c: 82.0, divisivel: true, unidade: 'g', minimo: 20, maximo: 100, fonte: 'Rótulo' },
+            arroz: { nome: 'Arroz branco cozido', p: 2.5, g: 0.2, c: 28.1, divisivel: true, unidade: 'g', minimo: 60, maximo: 200, fonte: 'TACO' },
+            feijao: { nome: 'Feijão carioca cozido', p: 4.8, g: 0.5, c: 13.6, divisivel: true, unidade: 'g', minimo: 60, maximo: 200, fonte: 'TACO' },
+            aveia: { nome: 'Aveia em flocos crua', p: 13.9, g: 8.5, c: 66.6, divisivel: true, unidade: 'g', minimo: 20, maximo: 60, fonte: 'TACO' },
+            banana: { nome: 'Banana-prata', p: 1.3, g: 0.1, c: 26.0, divisivel: false, unidade: 'un', peso: 100, maximo: 2, refTabela: '100 g', fonte: 'TACO' },
+            pao: { nome: 'Pão de forma tradicional', p: 8.8, g: 3.2, c: 48.0, divisivel: true, unidade: 'g', fonte: 'Rótulo' },
+            ovo: { nome: 'Ovo inteiro', p: 12.6, g: 9.6, c: 0.8, divisivel: false, unidade: 'un', peso: 50, maximo: 3, refTabela: '100 g', fonte: 'Rótulo' },
+            whey_vegano: { nome: 'Whey vegano (ervilha)', p: 80.0, g: 6.7, c: 3.3, divisivel: true, unidade: 'g', refTabela: '100 g', porcao: 30, fonte: 'Rótulo' },
+            whey_normal: { nome: 'Whey isolado Dux neutro', p: 80.0, g: 2.0, c: 2.7, divisivel: true, unidade: 'g', refTabela: '100 g', porcao: 30, fonte: 'Rótulo' },
+            frango: { nome: 'Peito de frango grelhado', p: 32.0, g: 2.5, c: 0, divisivel: true, unidade: 'g', fonte: 'TACO' },
+            patinho: { nome: 'Patinho sem gordura grelhado', p: 35.9, g: 7.3, c: 0, divisivel: true, unidade: 'g', fonte: 'TACO' },
+            acem: { nome: 'Acém cozido sem gordura visível', p: 27.3, g: 10.9, c: 0, divisivel: true, unidade: 'g', fonte: 'TACO' },
+            musculo: { nome: 'Músculo sem gordura cozido', p: 31.2, g: 6.7, c: 0, divisivel: true, unidade: 'g', fonte: 'TACO' },
+            bata_inglesa: { nome: 'Batata inglesa cozida', p: 1.2, g: 0.1, c: 11.9, divisivel: true, unidade: 'g', fonte: 'TACO' },
+            bata_frita: { nome: 'Batata in natura crua (para airfryer, sem óleo)', p: 2.0, g: 0.1, c: 17.5, divisivel: true, unidade: 'g', fonte: 'Rótulo' },
+            linhaca: { nome: 'Linhaça inteira', p: 14.1, g: 32.3, c: 43.3, divisivel: true, unidade: 'g', minimo: 20, maximo: 40, fonte: 'TACO' },
+            figado: { nome: 'Fígado bovino grelhado', p: 29.9, g: 9.0, c: 4.2, divisivel: true, unidade: 'g', fonte: 'TACO' },
+            coracao: { nome: 'Coração de galinha grelhado', p: 22.4, g: 12.1, c: 0.6, divisivel: true, unidade: 'g', fonte: 'TACO' },
+            atum: { nome: 'Atum sólido ao natural, drenado', p: 27.5, g: 2.7, c: 0, divisivel: true, unidade: 'g', maximo: 75, fonte: 'Rótulo' },
+            sardinha: { nome: 'Sardinha em óleo, drenada', p: 22.7, g: 11.5, c: 0, divisivel: true, unidade: 'g', maximo: 75, fonte: 'Rótulo' },
+            maionese_light: { nome: 'Maionese Hellmann\'s Light', p: 0, g: 15.0, c: 9.2, divisivel: true, unidade: 'g', opcional: true, fonte: 'Rótulo' },
+            maionese_tradicional: { nome: 'Maionese Hellmann\'s tradicional', p: 0, g: 30.8, c: 6.7, divisivel: true, unidade: 'g', opcional: true, fonte: 'Rótulo' },
+            manteiga: { nome: 'Manteiga', p: 0.7, g: 81.7, c: 0.1, divisivel: true, unidade: 'g', opcional: true, fonte: 'TACO' },
+            azeite: { nome: 'Azeite de oliva', p: 0, g: 100.0, c: 0, divisivel: true, unidade: 'ml', opcional: true, fonte: 'TACO' }
+        };
+
+        // Dados de projeção fornecidos: perda acumulada por semana (52 semanas)
+        const projecaoDados = [
+            { semana: 1, perda: 0.80, fase: 'Perda rápida inicial (água + glicogénio)' },
+            { semana: 2, perda: 1.50, fase: 'Início da mobilização de gordura' },
+            { semana: 3, perda: 2.10, fase: 'Redução progressiva da perda de fluidos' },
+            { semana: 4, perda: 2.60, fase: 'Transição para perda maioritariamente lipídica' },
+            { semana: 5, perda: 3.05, fase: 'Início da desaceleração metabólica gradual' },
+            { semana: 6, perda: 3.45, fase: 'Ritmo constante de perda de massa gorda' },
+            { semana: 7, perda: 3.83, fase: 'Ligeira redução do gasto energético basal' },
+            { semana: 8, perda: 4.18, fase: 'Adaptação metabólica moderada' },
+            { semana: 9, perda: 4.50, fase: 'Desperdício calórico das atividades reduzido' },
+            { semana: 10, perda: 4.80, fase: 'Perda firme, mas mais lenta que no mês 1' },
+            { semana: 11, perda: 5.08, fase: 'Redução sustentada de calorias gastas em repouso' },
+            { semana: 12, perda: 5.34, fase: 'Marca de ~5% de perda total' },
+            { semana: 13, perda: 5.58, fase: 'Termogénese adaptativa em consolidação' },
+            { semana: 14, perda: 5.80, fase: 'Menor massa corporal gasta menos energia ao mover-se' },
+            { semana: 15, perda: 6.01, fase: 'Ritmo de perda atinge metade do ritmo inicial' },
+            { semana: 16, perda: 6.21, fase: 'Perda semanal estável mas reduzida' },
+            { semana: 17, perda: 6.39, fase: 'Apetite/hormonas (ex: leptina) ajustadas ao novo peso' },
+            { semana: 18, perda: 6.56, fase: 'Perda residual e contínua' },
+            { semana: 19, perda: 6.72, fase: 'O déficit efetivo diminuiu para cerca de 200 kcal/dia' },
+            { semana: 20, perda: 6.87, fase: 'Entrada na fase de desaceleração acentuada' },
+            { semana: 21, perda: 7.01, fase: 'Ultrapassada a marca dos 7% acumulados' },
+            { semana: 22, perda: 7.14, fase: 'Desaceleração metabólica pronunciada' },
+            { semana: 23, perda: 7.26, fase: 'A aproximação ao novo equilíbrio calórico' },
+            { semana: 24, perda: 7.37, fase: 'Transição direta para a fase de platô' },
+            { semana: 25, perda: 7.47, fase: 'Perda semanal reduzida a 0,1%' },
+            { semana: 26, perda: 7.57, fase: 'Metade do ano: perda acumulada perto dos 7,5%' },
+            { semana: 27, perda: 7.66, fase: 'Ponto de inflexão do efeito platô' },
+            { semana: 28, perda: 7.74, fase: 'Variações diárias de água podem mascarar a perda' },
+            { semana: 29, perda: 7.82, fase: 'O gasto total aproxima-se da ingestão diária' },
+            { semana: 30, perda: 7.89, fase: 'Alteração do peso muito sutil' },
+            { semana: 31, perda: 7.96, fase: 'Mínima perda semanal residual' },
+            { semana: 32, perda: 8.02, fase: 'Marca dos 8% acumulados atingida' },
+            { semana: 33, perda: 8.08, fase: 'Platô metabólico dominante' },
+            { semana: 34, perda: 8.13, fase: 'Déficit efetivo muito reduzido (~100 kcal/dia)' },
+            { semana: 35, perda: 8.18, fase: 'Estabilização do peso quase completa' },
+            { semana: 36, perda: 8.23, fase: 'Pouca variação entre semanas consecutivas' },
+            { semana: 37, perda: 8.27, fase: 'Perda semanal impercetível na balança comum' },
+            { semana: 38, perda: 8.31, fase: 'Manutenção do peso corporal predominantemente' },
+            { semana: 39, perda: 8.35, fase: 'Estado de quase equilíbrio calórico' },
+            { semana: 40, perda: 8.39, fase: 'Novo ponto fixo metabólico estabelecido' },
+            { semana: 41, perda: 8.42, fase: 'Oscilações normais de água sobrepõem-se à perda' },
+            { semana: 42, perda: 8.45, fase: 'Fase final de estabilização' },
+            { semana: 43, perda: 8.48, fase: 'Perda semanal residual irrisória' },
+            { semana: 44, perda: 8.51, fase: 'Manutenção do novo peso metabólico' },
+            { semana: 45, perda: 8.54, fase: 'Ajuste biológico final concluído' },
+            { semana: 46, perda: 8.56, fase: 'Platô pleno atingido' },
+            { semana: 47, perda: 8.58, fase: 'Estabilização contínua' },
+            { semana: 48, perda: 8.60, fase: 'Variação dentro da margem de erro biológica' },
+            { semana: 49, perda: 8.62, fase: 'Equilíbrio calórico completo' },
+            { semana: 50, perda: 8.64, fase: 'Manutenção do peso a longo prazo' },
+            { semana: 51, perda: 8.65, fase: 'Perda praticamente nula' },
+            { semana: 52, perda: 8.66, fase: 'Conclusão do ciclo de 1 ano com estabilização' }
+        ];
+
+        const nomeRefeicoes = {
+            3: ['Café da manhã', 'Almoço', 'Noite'],
+            4: ['Café da manhã', 'Almoço', 'Pós-treino', 'Noite'],
+            5: ['Café da manhã', 'Lanche 1', 'Almoço', 'Pós-treino', 'Noite'],
+            6: ['Café da manhã', 'Lanche 1', 'Almoço', 'Lanche 2', 'Pós-treino', 'Noite']
+        };
+
+        let usuarioPerfil = {};
+        let chartInstance = null;
+        let ingredientesComQuantidade = {};
+        let qtdRefeicoesCurrent = 4;
+        let alimentosCustom = {};
+        let historicoPeso = [];
+        let planoDoDia = {};
+
+        window.addEventListener('load', () => {
+            carregarPerfil();
+            carregarAlimentosCustom();
+            carregarHistoricoPeso();
+            carregarPlanoDoDia();
+            carregarModoEscuro();
+            criarTabelaTabelaNutricional();
+            criarTabelaProjecao();
+            renderPlanoDoDia();
+            renderHistoricoPeso();
+        });
+
+        // ===== MODO ESCURO =====
+        function carregarModoEscuro() {
+            const ativo = localStorage.getItem('modoEscuro') === '1';
+            if (ativo) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('btnDarkMode').textContent = '☀️';
+            }
+        }
+
+        function toggleDarkMode() {
+            const ativo = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('modoEscuro', ativo ? '1' : '0');
+            document.getElementById('btnDarkMode').textContent = ativo ? '☀️' : '🌙';
+        }
+
+        // ===== ALIMENTOS PERSONALIZADOS =====
+        function carregarAlimentosCustom() {
+            const salvo = localStorage.getItem('alimentosCustom');
+            alimentosCustom = salvo ? JSON.parse(salvo) : {};
+            // Mescla no objeto principal 'alimentos' para que tabela, checkboxes e otimizador já os enxerguem
+            for (const [key, alimento] of Object.entries(alimentosCustom)) {
+                alimentos[key] = alimento;
+            }
+        }
+
+        function toggleUnidadeCustom() {
+            const unidade = document.getElementById('novoAlimentoUnidade').value;
+            document.getElementById('novoAlimentoPesoGroup').style.display = (unidade === 'un') ? 'block' : 'none';
+        }
+
+        function adicionarAlimentoCustom() {
+            const nome = document.getElementById('novoAlimentoNome').value.trim();
+            const unidade = document.getElementById('novoAlimentoUnidade').value;
+            const p = parseFloat(document.getElementById('novoAlimentoP').value);
+            const g = parseFloat(document.getElementById('novoAlimentoG').value);
+            const c = parseFloat(document.getElementById('novoAlimentoC').value);
+            const peso = parseFloat(document.getElementById('novoAlimentoPeso').value);
+
+            if (!nome) {
+                alert('Informe o nome do alimento.');
+                return;
+            }
+            if (isNaN(p) || isNaN(g) || isNaN(c)) {
+                alert('Preencha proteína, gordura e carboidrato (podem ser 0).');
+                return;
+            }
+            if (unidade === 'un' && (isNaN(peso) || peso <= 0)) {
+                alert('Informe o peso por unidade (em gramas) para alimentos contados por unidade.');
+                return;
+            }
+
+            const key = 'custom_' + nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') + '_' + Date.now().toString(36);
+
+            const novoAlimento = unidade === 'un'
+                ? { nome: nome, p, g, c, divisivel: false, unidade: 'un', peso: peso, refTabela: '100 g', fonte: 'Personalizado', custom: true }
+                : { nome: nome, p, g, c, divisivel: true, unidade: unidade, fonte: 'Personalizado', custom: true };
+
+            alimentosCustom[key] = novoAlimento;
+            alimentos[key] = novoAlimento;
+            localStorage.setItem('alimentosCustom', JSON.stringify(alimentosCustom));
+
+            document.getElementById('novoAlimentoNome').value = '';
+            document.getElementById('novoAlimentoP').value = '';
+            document.getElementById('novoAlimentoG').value = '';
+            document.getElementById('novoAlimentoC').value = '';
+            document.getElementById('novoAlimentoPeso').value = '';
+
+            criarTabelaTabelaNutricional();
+            gerarCheckboxIngredientes();
+            renderListaAlimentosCustom();
+        }
+
+        function removerAlimentoCustom(key) {
+            if (!confirm('Remover este alimento personalizado?')) return;
+            delete alimentosCustom[key];
+            delete alimentos[key];
+            localStorage.setItem('alimentosCustom', JSON.stringify(alimentosCustom));
+            criarTabelaTabelaNutricional();
+            gerarCheckboxIngredientes();
+            renderListaAlimentosCustom();
+        }
+
+        function renderListaAlimentosCustom() {
+            const container = document.getElementById('listaAlimentosCustom');
+            const entradas = Object.entries(alimentosCustom);
+            if (entradas.length === 0) {
+                container.innerHTML = '<small style="color:#888;">Nenhum alimento personalizado ainda.</small>';
+                return;
+            }
+            container.innerHTML = entradas.map(([key, a]) => `
+                <div class="custom-food-list-item">
+                    <span>${a.nome} <span class="badge-custom">Personalizado</span></span>
+                    <button class="btn-danger" style="padding:4px 10px; font-size:0.85em;" onclick="removerAlimentoCustom('${key}')">🗑️ Remover</button>
+                </div>
+            `).join('');
+        }
+
+        // ===== BUSCA / FILTROS =====
+        function filtrarIngredientes() {
+            const termo = document.getElementById('buscaIngrediente').value.toLowerCase();
+            document.querySelectorAll('#ingredientesContainer .ingrediente-item').forEach(item => {
+                const nome = (item.dataset.nome || '').toLowerCase();
+                item.style.display = nome.includes(termo) ? '' : 'none';
+            });
+        }
+
+        function filtrarTabelaAlimentos() {
+            const termo = document.getElementById('buscaAlimento').value.toLowerCase();
+            document.querySelectorAll('#corpoPabelaTabelaNutricional tr').forEach(tr => {
+                const nome = tr.dataset.nome || tr.cells[0].textContent.toLowerCase();
+                tr.style.display = nome.toLowerCase().includes(termo) ? '' : 'none';
+            });
+        }
+
+        // ===== HISTÓRICO DE PESO REAL =====
+        function carregarHistoricoPeso() {
+            const salvo = localStorage.getItem('historicoPeso');
+            historicoPeso = salvo ? JSON.parse(salvo) : [];
+        }
+
+        function adicionarPesoReal() {
+            const semana = parseInt(document.getElementById('pesoLogSemana').value);
+            const peso = parseFloat(document.getElementById('pesoLogValor').value);
+
+            if (isNaN(semana) || isNaN(peso)) {
+                alert('Preencha semana e peso corretamente.');
+                return;
+            }
+
+            historicoPeso = historicoPeso.filter(h => h.semana !== semana);
+            historicoPeso.push({ semana, peso });
+            historicoPeso.sort((a, b) => a.semana - b.semana);
+            localStorage.setItem('historicoPeso', JSON.stringify(historicoPeso));
+
+            document.getElementById('pesoLogSemana').value = '';
+            document.getElementById('pesoLogValor').value = '';
+
+            renderHistoricoPeso();
+            criarTabelaProjecao();
+        }
+
+        function removerPesoReal(semana) {
+            historicoPeso = historicoPeso.filter(h => h.semana !== semana);
+            localStorage.setItem('historicoPeso', JSON.stringify(historicoPeso));
+            renderHistoricoPeso();
+            criarTabelaProjecao();
+        }
+
+        function renderHistoricoPeso() {
+            const container = document.getElementById('listaHistoricoPeso');
+            if (historicoPeso.length === 0) {
+                container.innerHTML = '<small style="color:#888;">Nenhum peso registrado ainda.</small>';
+                return;
+            }
+            container.innerHTML = historicoPeso.map(h => `
+                <div class="weight-log-entry">
+                    <span><strong>Semana ${h.semana}:</strong> ${h.peso.toFixed(1)} kg</span>
+                    <button class="btn-danger" style="padding:3px 8px; font-size:0.8em;" onclick="removerPesoReal(${h.semana})">🗑️</button>
+                </div>
+            `).join('');
+        }
+
+        // ===== PLANO DO DIA =====
+        function carregarPlanoDoDia() {
+            const salvo = localStorage.getItem('planoDoDia');
+            planoDoDia = salvo ? JSON.parse(salvo) : {};
+        }
+
+        function salvarRefeicaoNoPlano(indexRefeicao, nomeRefeicao, resultado, macroAlvo) {
+            planoDoDia[indexRefeicao] = {
+                nome: nomeRefeicao,
+                totais: resultado.totais,
+                alvo: macroAlvo,
+                qtdRefeicoesContexto: qtdRefeicoesCurrent
+            };
+            localStorage.setItem('planoDoDia', JSON.stringify(planoDoDia));
+            renderPlanoDoDia();
+        }
+
+        function limparPlanoDoDia() {
+            if (!confirm('Limpar todas as refeições do plano do dia?')) return;
+            planoDoDia = {};
+            localStorage.removeItem('planoDoDia');
+            renderPlanoDoDia();
+        }
+
+        function calcularFibraAlvo(totalKcal) {
+            // Recomendação padrão: ~14g de fibra a cada 1000 kcal
+            return (totalKcal / 1000) * 14;
+        }
+
+        function renderPlanoDoDia() {
+            const container = document.getElementById('planoDiaContainer');
+            const totalContainer = document.getElementById('planoDiaTotalContainer');
+            const fibraBox = document.getElementById('fibraAlvoBox');
+            if (!container || !usuarioPerfil.peso) return;
+
+            const macrosDia = calcularMacros();
+            const nomes = nomeRefeicoes[qtdRefeicoesCurrent] || nomeRefeicoes[4];
+
+            // Só considera entradas do plano compatíveis com a configuração atual de refeições
+            const entradasValidas = Object.entries(planoDoDia).filter(([idx, e]) => e.qtdRefeicoesContexto === qtdRefeicoesCurrent);
+
+            let html = '';
+            let somaP = 0, somaG = 0, somaC = 0;
+            let refeicoesFeitas = 0;
+
+            nomes.forEach((nome, idx) => {
+                const entrada = planoDoDia[idx];
+                if (entrada && entrada.qtdRefeicoesContexto === qtdRefeicoesCurrent) {
+                    somaP += entrada.totais.p;
+                    somaG += entrada.totais.g;
+                    somaC += entrada.totais.c;
+                    refeicoesFeitas++;
+                    html += `<div class="plano-dia-refeicao">
+                        <strong>${nome}</strong>
+                        <div style="font-size:0.9em; margin-top:4px;">P: ${entrada.totais.p.toFixed(1)}g | G: ${entrada.totais.g.toFixed(1)}g | C: ${entrada.totais.c.toFixed(1)}g</div>
+                    </div>`;
+                } else {
+                    html += `<div class="plano-dia-refeicao vazia">
+                        <strong>${nome}</strong>
+                        <div style="font-size:0.85em; margin-top:4px;">⏳ Ainda não otimizada</div>
+                    </div>`;
+                }
+            });
+
+            container.innerHTML = html + (Object.keys(planoDoDia).length > 0 ? '<button class="btn-secondary" style="width:100%; margin-top:8px;" onclick="limparPlanoDoDia()">🗑️ Limpar plano do dia</button>' : '');
+
+            const totalKcal = (somaP * 4) + (somaG * 9) + (somaC * 4);
+            const metaKcal = (macrosDia.proteina * 4) + (macrosDia.gordura * 9) + (macrosDia.carbs * 4);
+
+            totalContainer.innerHTML = `
+                <div class="plano-dia-total">
+                    <h3 style="color:white; border:none; padding:0; margin-bottom:10px;">📊 Total do Dia (${refeicoesFeitas}/${nomes.length} refeições)</h3>
+                    <div class="macro-info">
+                        <div class="macro-info-item"><span><strong>Proteína:</strong> ${somaP.toFixed(1)}g (meta: ${macrosDia.proteina.toFixed(1)}g)</span></div>
+                        <div class="macro-info-item"><span><strong>Gordura:</strong> ${somaG.toFixed(1)}g (meta: ${macrosDia.gordura.toFixed(1)}g)</span></div>
+                        <div class="macro-info-item"><span><strong>Carboidratos:</strong> ${somaC.toFixed(1)}g (meta: ${macrosDia.carbs.toFixed(1)}g)</span></div>
+                        <div class="macro-info-item"><span><strong>Calorias:</strong> ${totalKcal.toFixed(0)} kcal (meta: ${metaKcal.toFixed(0)} kcal)</span></div>
+                    </div>
+                </div>
+            `;
+
+            const fibraAlvo = calcularFibraAlvo(metaKcal);
+            fibraBox.innerHTML = `<div class="fibra-box">🌾 <strong>Meta de fibra diária sugerida:</strong> ~${fibraAlvo.toFixed(0)}g (referência de ~14g por 1000 kcal ingeridas). Priorize vegetais, aveia, feijão e frutas para atingi-la.</div>`;
+        }
+
+        // ===== EXPORT / IMPORT =====
+        function exportarDados() {
+            const dados = {
+                versao: 1,
+                exportadoEm: new Date().toISOString(),
+                perfil: usuarioPerfil,
+                alimentosCustom: alimentosCustom,
+                historicoPeso: historicoPeso,
+                planoDoDia: planoDoDia
+            };
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `calculadora-dieta-backup-${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function importarDados(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dados = JSON.parse(e.target.result);
+                    if (dados.perfil) {
+                        usuarioPerfil = dados.perfil;
+                        localStorage.setItem('perfilUsuario', JSON.stringify(usuarioPerfil));
+                    }
+                    if (dados.alimentosCustom) {
+                        alimentosCustom = dados.alimentosCustom;
+                        localStorage.setItem('alimentosCustom', JSON.stringify(alimentosCustom));
+                        for (const [key, alimento] of Object.entries(alimentosCustom)) {
+                            alimentos[key] = alimento;
+                        }
+                    }
+                    if (dados.historicoPeso) {
+                        historicoPeso = dados.historicoPeso;
+                        localStorage.setItem('historicoPeso', JSON.stringify(historicoPeso));
+                    }
+                    if (dados.planoDoDia) {
+                        planoDoDia = dados.planoDoDia;
+                        localStorage.setItem('planoDoDia', JSON.stringify(planoDoDia));
+                    }
+
+                    preencherPerfil();
+                    criarTabelaTabelaNutricional();
+                    gerarCheckboxIngredientes();
+                    renderListaAlimentosCustom();
+                    renderHistoricoPeso();
+                    criarTabelaProjecao();
+                    renderPlanoDoDia();
+
+                    alert('Dados importados com sucesso!');
+                    fecharPerfil();
+                } catch (err) {
+                    alert('Erro ao importar arquivo: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ===== VALIDAÇÃO DE DÉFICIT SEGURO =====
+        function checarDeficitSeguro() {
+            const alertaDiv = document.getElementById('alertaDeficit');
+            if (!alertaDiv) return;
+
+            const peso = parseFloat(document.getElementById('pesoPerfil').value);
+            const altura = parseFloat(document.getElementById('alturaPerfil').value);
+            const idade = parseFloat(document.getElementById('idadePerfil').value);
+            const sexo = document.getElementById('sexoPerfil').value;
+            const atividade = document.getElementById('atividadePerfil').value;
+            const deficit = parseFloat(document.getElementById('deficitPerfil').value);
+
+            if (isNaN(peso) || isNaN(altura) || isNaN(idade) || isNaN(deficit)) {
+                alertaDiv.innerHTML = '';
+                return;
+            }
+
+            let tmb;
+            if (sexo === 'M') {
+                tmb = (10 * peso) + (6.25 * altura) - (5 * idade) + 5;
+            } else {
+                tmb = (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
+            }
+            const tdee = tmb * getFatorAtividade(atividade);
+            const percentualDeficit = (deficit / tdee) * 100;
+
+            if (percentualDeficit > 25) {
+                alertaDiv.innerHTML = `<div class="alert-box">⚠️ <strong>Déficit agressivo:</strong> ${deficit} kcal representa ${percentualDeficit.toFixed(0)}% do seu gasto total estimado (${tdee.toFixed(0)} kcal). Déficits acima de 25% do TDEE aumentam o risco de perda de massa magra e fadiga. Considere reduzir o déficit.</div>`;
+            } else {
+                alertaDiv.innerHTML = '';
+            }
+        }
+
+        function abrirAba(abaName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(abaName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function criarTabelaTabelaNutricional() {
+            const tbody = document.getElementById('corpoPabelaTabelaNutricional');
+            tbody.innerHTML = '';
+
+            // Ordenar alimentos por proteína (do maior para o menor)
+            const alimentosOrdenados = Object.entries(alimentos)
+                .filter(([key, alimento]) => !alimento.opcional)
+                .sort((a, b) => b[1].p - a[1].p);
+
+            for (const [key, alimento] of alimentosOrdenados) {
+                const tr = document.createElement('tr');
+                tr.dataset.nome = alimento.nome.toLowerCase();
+                // Referência de exibição: usa refTabela quando definido, senão 100g/100un
+                let referencia;
+                if (alimento.refTabela) {
+                    referencia = alimento.refTabela;
+                } else {
+                    referencia = alimento.divisivel ? '100 g' : `100 ${alimento.unidade}`;
+                }
+                // Nota de porção (ex.: whey)
+                let notaPorcao = '';
+                if (alimento.porcao) {
+                    notaPorcao = ` <small style="color:#888;">(porção ${alimento.porcao}g)</small>`;
+                }
+
+                // Fonte do dado (TACO ou Rótulo)
+                const fonte = alimento.fonte || '—';
+                let fonteBadge;
+                if (fonte === 'TACO') {
+                    fonteBadge = `<span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#e8f5e9;color:#2e7d32;font-size:0.8em;font-weight:600;">TACO</span>`;
+                } else if (fonte === 'Rótulo') {
+                    fonteBadge = `<span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#fff3e0;color:#e65100;font-size:0.8em;font-weight:600;">Rótulo</span>`;
+                } else if (fonte === 'Personalizado') {
+                    fonteBadge = `<span style="display:inline-block;padding:2px 8px;border-radius:10px;background:#ede7f6;color:#5e35b1;font-size:0.8em;font-weight:600;">Personalizado</span>`;
+                } else {
+                    fonteBadge = fonte;
+                }
+
+                const btnRemover = alimento.custom
+                    ? ` <button class="btn-danger" style="padding:2px 6px; font-size:0.75em; margin-left:4px;" onclick="removerAlimentoCustom('${key}')" title="Remover alimento personalizado">🗑️</button>`
+                    : '';
+
+                tr.innerHTML = `
+                    <td>${alimento.nome}${notaPorcao}${btnRemover}</td>
+                    <td>${referencia}</td>
+                    <td>${alimento.p.toFixed(1)}</td>
+                    <td>${alimento.g.toFixed(1)}</td>
+                    <td>${alimento.c.toFixed(1)}</td>
+                    <td>${fonteBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+
+            criarSecaoRestricoes();
+            renderListaAlimentosCustom();
+        }
+
+        function criarSecaoRestricoes() {
+            const container = document.getElementById('restricoesContainer');
+            container.innerHTML = '';
+
+            const restricoes = [
+                { nome: 'Cuscuz', tipo: 'Divisível', restricao: 'Mín: 20g | Máx: 100g por refeição' },
+                { nome: 'Arroz', tipo: 'Divisível', restricao: 'Mín: 60g | Máx: 200g por refeição' },
+                { nome: 'Feijão', tipo: 'Divisível', restricao: 'Mín: 60g | Máx: 200g por refeição' },
+                { nome: 'Aveia', tipo: 'Divisível', restricao: 'Mín: 20g | Máx: 60g por refeição' },
+                { nome: 'Banana', tipo: 'Indivisível', restricao: 'Máx: 2 unidades por refeição' },
+                { nome: 'Ovo', tipo: 'Indivisível', restricao: 'Máx: 3 unidades por refeição' },
+                { nome: 'Atum', tipo: 'Divisível', restricao: 'Máx: 75g por refeição' },
+                { nome: 'Sardinha', tipo: 'Divisível', restricao: 'Máx: 75g por refeição' },
+                { nome: 'Linhaça', tipo: 'Divisível', restricao: 'Mín: 20g | Máx: 40g por refeição' },
+                { nome: 'Proteína Garantida', tipo: '---', restricao: 'Proteína SEMPRE atendida (adiciona Whey se necessário)' },
+                { nome: 'Gordura Garantida', tipo: '---', restricao: 'Gordura SEMPRE atendida (adiciona Azeite se necessário)' },
+                { nome: 'Carboidratos', tipo: '---', restricao: 'Melhor esforço dentro de 5% de tolerância' },
+            ];
+
+            restricoes.forEach(r => {
+                const div = document.createElement('div');
+                div.className = 'restricao-item';
+                div.innerHTML = `
+                    <strong>${r.nome}</strong>
+                    <small><strong>Tipo:</strong> ${r.tipo}</small>
+                    <small><strong>Restrição:</strong> ${r.restricao}</small>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function atualizarQuantidadeRefeicoes() {
+            qtdRefeicoesCurrent = parseInt(document.getElementById('qtdRefeicoes').value);
+            const selectRefeicao = document.getElementById('refeicaoSelecionada');
+            selectRefeicao.innerHTML = '<option value="">-- Selecione --</option>';
+            
+            const nomes = nomeRefeicoes[qtdRefeicoesCurrent];
+            nomes.forEach((nome, idx) => {
+                const option = document.createElement('option');
+                option.value = idx;
+                option.textContent = nome;
+                selectRefeicao.appendChild(option);
+            });
+            
+            document.getElementById('macroAlvoContainer').style.display = 'none';
+            ingredientesComQuantidade = {};
+            renderPlanoDoDia();
+        }
+
+        function abrirPerfil() {
+            document.getElementById('modalPerfil').classList.add('active');
+            preencherPerfil();
+        }
+
+        function fecharPerfil() {
+            document.getElementById('modalPerfil').classList.remove('active');
+        }
+
+        function carregarPerfil() {
+            const perfil = localStorage.getItem('perfilUsuario');
+            if (perfil) {
+                usuarioPerfil = JSON.parse(perfil);
+            } else {
+                usuarioPerfil = {
+                    nome: 'Usuário',
+                    sexo: 'F',
+                    idade: 35,
+                    altura: 165,
+                    peso: 60,
+                    gordura: 33,
+                    atividade: 'Moderado',
+                    deficit: 400
+                };
+                localStorage.setItem('perfilUsuario', JSON.stringify(usuarioPerfil));
+            }
+        }
+
+        function preencherPerfil() {
+            document.getElementById('nomePerfil').value = usuarioPerfil.nome || '';
+            document.getElementById('sexoPerfil').value = usuarioPerfil.sexo || 'F';
+            document.getElementById('idadePerfil').value = usuarioPerfil.idade || 35;
+            document.getElementById('alturaPerfil').value = usuarioPerfil.altura || 165;
+            document.getElementById('pesoPerfil').value = usuarioPerfil.peso || 60;
+            document.getElementById('gorduraPerfil').value = usuarioPerfil.gordura || 33;
+            document.getElementById('atividadePerfil').value = usuarioPerfil.atividade || 'Moderado';
+            document.getElementById('deficitPerfil').value = usuarioPerfil.deficit || 400;
+
+            ['sexoPerfil', 'idadePerfil', 'alturaPerfil', 'pesoPerfil', 'atividadePerfil', 'deficitPerfil'].forEach(id => {
+                const el = document.getElementById(id);
+                el.oninput = checarDeficitSeguro;
+                el.onchange = checarDeficitSeguro;
+            });
+            checarDeficitSeguro();
+        }
+
+        function salvarPerfil() {
+            usuarioPerfil = {
+                nome: document.getElementById('nomePerfil').value || 'Usuário',
+                sexo: document.getElementById('sexoPerfil').value,
+                idade: parseInt(document.getElementById('idadePerfil').value),
+                altura: parseInt(document.getElementById('alturaPerfil').value),
+                peso: parseFloat(document.getElementById('pesoPerfil').value),
+                gordura: parseFloat(document.getElementById('gorduraPerfil').value),
+                atividade: document.getElementById('atividadePerfil').value,
+                deficit: parseInt(document.getElementById('deficitPerfil').value)
+            };
+            localStorage.setItem('perfilUsuario', JSON.stringify(usuarioPerfil));
+            criarTabelaProjecao();
+            renderPlanoDoDia();
+            fecharPerfil();
+        }
+
+        function getFatorAtividade(atividade) {
+            const fatores = { "Sedentário": 1.2, "Leve": 1.375, "Moderado": 1.55, "Ativo": 1.725, "Muito Ativo": 1.9 };
+            return fatores[atividade] || 1.55;
+        }
+
+        function calcularMacros() {
+            const peso = usuarioPerfil.peso;
+            const gordura = usuarioPerfil.gordura;
+            const sexo = usuarioPerfil.sexo;
+            const idade = usuarioPerfil.idade;
+            const altura = usuarioPerfil.altura;
+            const deficit = usuarioPerfil.deficit;
+
+            const massaMagra = peso * (1 - gordura / 100);
+            let tmb;
+            if (sexo === 'M') {
+                tmb = (10 * peso) + (6.25 * altura) - (5 * idade) + 5;
+            } else {
+                tmb = (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
+            }
+
+            const tdee = tmb * getFatorAtividade(usuarioPerfil.atividade);
+            const totalKcal = tdee - deficit;
+            const proteina = massaMagra * 2.2;
+            const gorduraGramas = (totalKcal * 0.30) / 9;
+            const carbosGramas = (totalKcal - (proteina * 4) - (gorduraGramas * 9)) / 4;
+
+            return { proteina, gordura: gorduraGramas, carbs: carbosGramas };
+        }
+
+        function obterMacroRefeicao(indexRefeicao) {
+            const macros = calcularMacros();
+            const qtdRef = qtdRefeicoesCurrent;
+            
+            const distribuicoes = {
+                3: [
+                    { p: macros.proteina / 3, g: macros.gordura * 0.33, c: macros.carbs * 0.33 },
+                    { p: macros.proteina / 3, g: macros.gordura * 0.33, c: macros.carbs * 0.4 },
+                    { p: macros.proteina / 3, g: macros.gordura * 0.34, c: macros.carbs * 0.27 }
+                ],
+                4: [
+                    { p: macros.proteina / 4, g: macros.gordura * 0.2857, c: macros.carbs * 0.28 },
+                    { p: macros.proteina / 4, g: macros.gordura * 0.2857, c: macros.carbs * 0.35 },
+                    { p: macros.proteina / 4, g: macros.gordura * 0.2, c: macros.carbs * 0.25 },
+                    { p: macros.proteina / 4, g: macros.gordura * 0.2286, c: macros.carbs * 0.12 }
+                ],
+                5: [
+                    { p: macros.proteina / 5, g: macros.gordura * 0.2, c: macros.carbs * 0.25 },
+                    { p: macros.proteina / 5, g: macros.gordura * 0.15, c: macros.carbs * 0.15 },
+                    { p: macros.proteina / 5, g: macros.gordura * 0.28, c: macros.carbs * 0.35 },
+                    { p: macros.proteina / 5, g: macros.gordura * 0.18, c: macros.carbs * 0.2 },
+                    { p: macros.proteina / 5, g: macros.gordura * 0.19, c: macros.carbs * 0.05 }
+                ],
+                6: [
+                    { p: macros.proteina / 6, g: macros.gordura * 0.15, c: macros.carbs * 0.2 },
+                    { p: macros.proteina / 6, g: macros.gordura * 0.12, c: macros.carbs * 0.12 },
+                    { p: macros.proteina / 6, g: macros.gordura * 0.28, c: macros.carbs * 0.35 },
+                    { p: macros.proteina / 6, g: macros.gordura * 0.15, c: macros.carbs * 0.15 },
+                    { p: macros.proteina / 6, g: macros.gordura * 0.18, c: macros.carbs * 0.15 },
+                    { p: macros.proteina / 6, g: macros.gordura * 0.12, c: macros.carbs * 0.03 }
+                ]
+            };
+
+            return distribuicoes[qtdRef][indexRefeicao];
+        }
+
+        function atualizarRefeicaoAlvo() {
+            const indexRefeicao = parseInt(document.getElementById('refeicaoSelecionada').value);
+            if (isNaN(indexRefeicao)) return;
+
+            const macroAlvo = obterMacroRefeicao(indexRefeicao);
+            document.getElementById('alvoProteina').value = macroAlvo.p.toFixed(1) + 'g';
+            document.getElementById('alvoGordura').value = macroAlvo.g.toFixed(1) + 'g';
+            document.getElementById('alvoCarbs').value = macroAlvo.c.toFixed(1) + 'g';
+            document.getElementById('macroAlvoContainer').style.display = 'block';
+            const buscaEl = document.getElementById('buscaIngrediente');
+            if (buscaEl) buscaEl.value = '';
+            gerarCheckboxIngredientes();
+            ingredientesComQuantidade = {};
+        }
+
+        function gerarCheckboxIngredientes() {
+            const container = document.getElementById('ingredientesContainer');
+            container.innerHTML = '';
+
+            for (const [key, alimento] of Object.entries(alimentos)) {
+                if (alimento.opcional) continue;
+                
+                const div = document.createElement('div');
+                div.className = 'ingrediente-item';
+                div.dataset.nome = alimento.nome.toLowerCase();
+                
+                const unidadeLabel = alimento.divisivel ? `g` : `${alimento.unidade}`;
+                const placeholderText = alimento.divisivel ? 'gramas' : `quantidades`;
+
+                // Exibir macros na referência correta:
+                // - Divisíveis: por 100g
+                // - Indivisíveis (banana/ovo): por unidade (peso da unidade)
+                let macrosTexto;
+                if (alimento.divisivel) {
+                    macrosTexto = `P: ${alimento.p.toFixed(1)}g | G: ${alimento.g.toFixed(1)}g | C: ${alimento.c.toFixed(1)}g <span style="color:#999;">(por 100g)</span>`;
+                } else {
+                    const fator = alimento.peso / 100;
+                    const pUn = (alimento.p * fator).toFixed(1);
+                    const gUn = (alimento.g * fator).toFixed(1);
+                    const cUn = (alimento.c * fator).toFixed(1);
+                    macrosTexto = `P: ${pUn}g | G: ${gUn}g | C: ${cUn}g <span style="color:#999;">(por unidade ~${alimento.peso}g)</span>`;
+                }
+                
+                div.innerHTML = `
+                    <div class="ingrediente-checkbox">
+                        <input type="checkbox" id="ing_${key}" value="${key}" onchange="atualizarQuantidade('${key}')">
+                    </div>
+                    <div class="ingrediente-info">
+                        <strong>${alimento.nome}${alimento.custom ? ' <span class="badge-custom">Personalizado</span>' : ''}</strong>
+                        <small>${macrosTexto}</small>
+                    </div>
+                    <div class="ingrediente-qtd" id="qtd_${key}" style="display:none;">
+                        <div class="ingrediente-qtd-label">${unidadeLabel}</div>
+                        <input type="number" id="input_${key}" placeholder="${placeholderText}" min="0" step="any">
+                    </div>
+                `;
+                container.appendChild(div);
+            }
+        }
+
+        function atualizarQuantidade(key) {
+            const checkbox = document.getElementById(`ing_${key}`);
+            const qtdDiv = document.getElementById(`qtd_${key}`);
+            const input = document.getElementById(`input_${key}`);
+
+            if (checkbox.checked) {
+                qtdDiv.style.display = 'block';
+            } else {
+                qtdDiv.style.display = 'none';
+                delete ingredientesComQuantidade[key];
+                input.value = '';
+            }
+        }
+
+        function otimizarRefeicao() {
+            const macroAlvo = {
+                p: parseFloat(document.getElementById('alvoProteina').value),
+                g: parseFloat(document.getElementById('alvoGordura').value),
+                c: parseFloat(document.getElementById('alvoCarbs').value)
+            };
+
+            const ingredientesSelecionados = [];
+            const quantidadesEspecificas = {};
+
+            document.querySelectorAll('#ingredientesContainer input[type="checkbox"]:checked').forEach(cb => {
+                const key = cb.value;
+                ingredientesSelecionados.push(key);
+                const qtdInput = document.getElementById(`input_${key}`);
+                if (qtdInput && qtdInput.value) {
+                    quantidadesEspecificas[key] = parseFloat(qtdInput.value);
+                }
+            });
+
+            if (ingredientesSelecionados.length === 0) {
+                alert('Selecione pelo menos um ingrediente!');
+                return;
+            }
+
+            const indexRefeicao = parseInt(document.getElementById('refeicaoSelecionada').value);
+            const nomeRefeicao = nomeRefeicoes[qtdRefeicoesCurrent][indexRefeicao];
+
+            const resultado = encontrarQuantidades(ingredientesSelecionados, macroAlvo, quantidadesEspecificas);
+            mostrarResultado(resultado, macroAlvo, indexRefeicao, nomeRefeicao);
+        }
+
+        function encontrarQuantidades(ingredientes, alvo, quantidadesEspecificas = {}) {
+            const maxIteracoes = 80000;
+            const tolerancia = 0.05; // 5% máximo (nunca ultrapassar acima disso)
+
+            // Função auxiliar: calcula macros de uma configuração de quantidades
+            function calcularTotais(quantidades) {
+                let p = 0, g = 0, c = 0;
+                for (const [key, qtd] of Object.entries(quantidades)) {
+                    const alimento = alimentos[key];
+                    if (!alimento || qtd <= 0) continue;
+                    let proporcao;
+                    if (!alimento.divisivel) {
+                        proporcao = (qtd * alimento.peso) / 100;
+                    } else {
+                        proporcao = qtd / 100;
+                    }
+                    p += alimento.p * proporcao;
+                    g += alimento.g * proporcao;
+                    c += alimento.c * proporcao;
+                }
+                return { p, g, c };
+            }
+
+            // Quantidade mínima de um alimento (em gramas ou unidades)
+            function qtdMinima(ing) {
+                const alimento = alimentos[ing];
+                return !alimento.divisivel ? 1 : (alimento.minimo || 1);
+            }
+
+            // Macros de um alimento em sua quantidade mínima
+            function macrosMinimo(ing) {
+                const alimento = alimentos[ing];
+                const qtdMin = qtdMinima(ing);
+                const proporcao = !alimento.divisivel ? (qtdMin * alimento.peso) / 100 : qtdMin / 100;
+                return { p: alimento.p * proporcao, g: alimento.g * proporcao, c: alimento.c * proporcao };
+            }
+
+            // Verifica se um conjunto de ingredientes, cada um em seu MÍNIMO,
+            // já estoura alguma macro além da tolerância (limite superior)
+            function conjuntoEstouraNoMinimo(lista) {
+                let somaP = 0, somaG = 0, somaC = 0;
+                // incluir quantidades fixas também
+                for (const [key, qtd] of Object.entries(quantidadesEspecificas)) {
+                    const m = calcularTotais({ [key]: qtd });
+                    somaP += m.p; somaG += m.g; somaC += m.c;
+                }
+                for (const ing of lista) {
+                    if (quantidadesEspecificas[ing]) continue;
+                    const m = macrosMinimo(ing);
+                    somaP += m.p; somaG += m.g; somaC += m.c;
+                }
+                return (somaP > alvo.p * (1 + tolerancia)) ||
+                       (somaG > alvo.g * (1 + tolerancia)) ||
+                       (somaC > alvo.c * (1 + tolerancia));
+            }
+
+            // ---- ETAPA 1: Determinar quais ingredientes cabem juntos ----
+            // Percorremos na ordem da lista (prioridade = ordem de seleção do usuário),
+            // adicionando um ingrediente por vez apenas se o conjunto resultante
+            // NÃO estourar nenhuma macro em seus mínimos.
+            const ingredientesUsados = [];
+            const alimentosInutilizaveis = [];
+
+            // Fixos sempre entram (o usuário definiu explicitamente)
+            const fixos = ingredientes.filter(ing => quantidadesEspecificas[ing]);
+            const livres = ingredientes.filter(ing => !quantidadesEspecificas[ing]);
+
+            for (const ing of livres) {
+                const candidato = [...ingredientesUsados, ing];
+                if (conjuntoEstouraNoMinimo(candidato)) {
+                    // Este ingrediente não cabe junto com os já escolhidos
+                    const alimento = alimentos[ing];
+                    const maxVal = !alimento.divisivel ? (alimento.maximo || 3) : (alimento.maximo || 300);
+                    const minVal = qtdMinima(ing);
+                    alimentosInutilizaveis.push({
+                        nome: alimento.nome,
+                        min: minVal,
+                        max: maxVal,
+                        divisivel: alimento.divisivel
+                    });
+                } else {
+                    ingredientesUsados.push(ing);
+                }
+            }
+
+            let ingredientesValidos = [...fixos, ...ingredientesUsados];
+
+            // Se nenhum ingrediente coube
+            if (ingredientesValidos.length === 0) {
+                return {
+                    quantidades: {},
+                    totais: { p: 0, g: 0, c: 0 },
+                    erro: { p: 1, g: 1, c: 1 },
+                    valido: false,
+                    adicionados: [],
+                    quantidadesFixas: quantidadesEspecificas,
+                    alimentosInutilizaveis
+                };
+            }
+
+            // Função de otimização Monte Carlo para um conjunto específico
+            function otimizarConjunto(conjunto, iteracoes) {
+                let melhorGeral = null, erroGeral = Infinity;
+                let melhorLimite = null, erroLimite = Infinity;
+                let solucaoValida = null;
+
+                const divisiveisLivres = conjunto.filter(ing =>
+                    !quantidadesEspecificas[ing] && alimentos[ing].divisivel);
+
+                for (let it = 0; it < iteracoes; it++) {
+                    const quantidades = { ...quantidadesEspecificas };
+                    for (const ing of conjunto) {
+                        if (quantidadesEspecificas[ing]) continue;
+                        const alimento = alimentos[ing];
+                        if (!alimento.divisivel) {
+                            const maxUn = alimento.maximo || 5;
+                            quantidades[ing] = Math.max(1, Math.round(Math.random() * maxUn));
+                        } else {
+                            const minG = alimento.minimo || 5;
+                            const maxG = alimento.maximo || 300;
+                            quantidades[ing] = minG + Math.random() * (maxG - minG);
+                        }
+                    }
+
+                    let totais = calcularTotais(quantidades);
+
+                    // Testar ancoragem por P, G e C — escolher a que dá menor erro total
+                    // penalizando fortemente estouro do limite superior.
+                    if (divisiveisLivres.length > 0) {
+                        const candidatasRazao = [];
+                        if (totais.p > 0.01) candidatasRazao.push(alvo.p / totais.p);
+                        if (totais.g > 0.01) candidatasRazao.push(alvo.g / totais.g);
+                        if (totais.c > 0.01) candidatasRazao.push(alvo.c / totais.c);
+
+                        let melhorAjuste = null;
+                        let melhorErroAjuste = Infinity;
+
+                        for (const razaoBruta of candidatasRazao) {
+                            const razaoLimitada = Math.max(0.2, Math.min(5, razaoBruta));
+                            const qTeste = { ...quantidades };
+                            for (const ing of divisiveisLivres) {
+                                const alimento = alimentos[ing];
+                                let novaQtd = quantidades[ing] * razaoLimitada;
+                                if (alimento.minimo) novaQtd = Math.max(alimento.minimo, novaQtd);
+                                if (alimento.maximo) novaQtd = Math.min(alimento.maximo, novaQtd);
+                                qTeste[ing] = novaQtd;
+                            }
+                            const tTeste = calcularTotais(qTeste);
+                            const eP = Math.abs(tTeste.p - alvo.p) / alvo.p;
+                            const eG = Math.abs(tTeste.g - alvo.g) / alvo.g;
+                            const eC = Math.abs(tTeste.c - alvo.c) / alvo.c;
+                            let penalidade = 0;
+                            if (tTeste.p > alvo.p * (1 + tolerancia)) penalidade += 10;
+                            if (tTeste.g > alvo.g * (1 + tolerancia)) penalidade += 10;
+                            if (tTeste.c > alvo.c * (1 + tolerancia)) penalidade += 10;
+                            const eTotal = eP + eG + eC + penalidade;
+                            if (eTotal < melhorErroAjuste) {
+                                melhorErroAjuste = eTotal;
+                                melhorAjuste = qTeste;
+                            }
+                        }
+                        if (melhorAjuste) {
+                            for (const ing of divisiveisLivres) quantidades[ing] = melhorAjuste[ing];
+                            totais = calcularTotais(quantidades);
+                        }
+                    }
+
+                    const erroP = Math.abs(totais.p - alvo.p) / alvo.p;
+                    const erroG = Math.abs(totais.g - alvo.g) / alvo.g;
+                    const erroC = Math.abs(totais.c - alvo.c) / alvo.c;
+                    const erroTotal = erroP + erroG + erroC;
+
+                    const naoEstoura = (totais.p <= alvo.p * (1 + tolerancia)) &&
+                                       (totais.g <= alvo.g * (1 + tolerancia)) &&
+                                       (totais.c <= alvo.c * (1 + tolerancia));
+
+                    const registro = {
+                        quantidades: { ...quantidades },
+                        totais: { ...totais },
+                        erro: { p: erroP, g: erroG, c: erroC },
+                        valido: (erroP <= tolerancia && erroG <= tolerancia && erroC <= tolerancia),
+                        adicionados: [],
+                        quantidadesFixas: quantidadesEspecificas,
+                        alimentosInutilizaveis
+                    };
+
+                    if (registro.valido) { solucaoValida = registro; break; }
+
+                    if (naoEstoura && erroTotal < erroLimite) {
+                        erroLimite = erroTotal;
+                        melhorLimite = registro;
+                    }
+                    if (erroTotal < erroGeral) {
+                        erroGeral = erroTotal;
+                        melhorGeral = registro;
+                    }
+                }
+                return { melhorLimite, melhorGeral, solucaoValida, valido: !!solucaoValida };
+            }
+
+            // ---- ETAPA 2: Otimizar. Se estourar, reduzir subconjunto ----
+            let solucao = null;
+            let conjuntoAtual = [...ingredientesValidos];
+
+            while (conjuntoAtual.length > 0) {
+                const res = otimizarConjunto(conjuntoAtual, maxIteracoes);
+
+                // Se retornou solução válida direto
+                if (res.valido && res.solucaoValida) { solucao = res.solucaoValida; break; }
+
+                // Se achou solução que não estoura o limite superior → aceitar
+                if (res.melhorLimite) {
+                    solucao = res.melhorLimite;
+                    break;
+                }
+
+                // Não há combinação dentro do limite superior com este conjunto:
+                // remover o ÚLTIMO ingrediente livre (menor prioridade) e marcá-lo como excluído
+                const removivel = [...conjuntoAtual].reverse().find(ing => !quantidadesEspecificas[ing]);
+                if (!removivel) {
+                    // só sobraram fixos que estouram → usar melhor geral
+                    solucao = res.melhorGeral;
+                    break;
+                }
+
+                const alimentoRem = alimentos[removivel];
+                const maxVal = !alimentoRem.divisivel ? (alimentoRem.maximo || 3) : (alimentoRem.maximo || 300);
+                alimentosInutilizaveis.push({
+                    nome: alimentoRem.nome,
+                    min: qtdMinima(removivel),
+                    max: maxVal,
+                    divisivel: alimentoRem.divisivel
+                });
+                conjuntoAtual = conjuntoAtual.filter(ing => ing !== removivel);
+            }
+
+            // Se esvaziou completamente
+            if (!solucao || Object.keys(solucao.quantidades).length === 0) {
+                return {
+                    quantidades: {},
+                    totais: { p: 0, g: 0, c: 0 },
+                    erro: { p: 1, g: 1, c: 1 },
+                    valido: false,
+                    adicionados: [],
+                    quantidadesFixas: quantidadesEspecificas,
+                    alimentosInutilizaveis
+                };
+            }
+
+            // garantir que alimentosInutilizaveis atualizado esteja na solução
+            solucao.alimentosInutilizaveis = alimentosInutilizaveis;
+
+            // ---- ETAPA 3: Fallbacks (proteína/gordura) sem estourar carbos ----
+            if (solucao) {
+                // Corrigir proteína faltante com whey vegano (baixo carbo)
+                if (solucao.erro.p > tolerancia && solucao.totais.p < alvo.p) {
+                    const proteinaFaltante = alvo.p - solucao.totais.p;
+                    if (proteinaFaltante > 0.5) {
+                        const wheyProt = alimentos.whey_vegano.p; // proteína por 100g
+                        const wheyCarb = alimentos.whey_vegano.c; // carbo por 100g
+                        const wheyGord = alimentos.whey_vegano.g; // gordura por 100g
+                        const wheyG = (proteinaFaltante / wheyProt) * 100;
+                        // Verificar se o carbo/gordura do whey não estoura
+                        const carboExtra = (wheyG * wheyCarb) / 100;
+                        const gordExtra = (wheyG * wheyGord) / 100;
+                        if (solucao.totais.c + carboExtra <= alvo.c * (1 + tolerancia) &&
+                            solucao.totais.g + gordExtra <= alvo.g * (1 + tolerancia)) {
+                            const wheyAtual = solucao.quantidades['whey_vegano'] || 0;
+                            solucao.quantidades['whey_vegano'] = wheyAtual + Math.round(wheyG * 10) / 10;
+                            solucao.adicionados.push('whey_vegano_protein');
+                            solucao.totais = calcularTotais(solucao.quantidades);
+                            solucao.erro.p = Math.abs(solucao.totais.p - alvo.p) / alvo.p;
+                            solucao.erro.g = Math.abs(solucao.totais.g - alvo.g) / alvo.g;
+                            solucao.erro.c = Math.abs(solucao.totais.c - alvo.c) / alvo.c;
+                        }
+                    }
+                }
+
+                // Corrigir gordura faltante com azeite (zero carbo)
+                if (solucao.erro.g > tolerancia && solucao.totais.g < alvo.g) {
+                    const gorduraFaltante = alvo.g - solucao.totais.g;
+                    if (gorduraFaltante > 0.5) {
+                        const azeiteMl = gorduraFaltante; // 1:1
+                        const azeiteAtual = solucao.quantidades['azeite'] || 0;
+                        solucao.quantidades['azeite'] = azeiteAtual + Math.round(azeiteMl);
+                        solucao.adicionados.push('azeite');
+                        solucao.totais = calcularTotais(solucao.quantidades);
+                        solucao.erro.p = Math.abs(solucao.totais.p - alvo.p) / alvo.p;
+                        solucao.erro.g = Math.abs(solucao.totais.g - alvo.g) / alvo.g;
+                        solucao.erro.c = Math.abs(solucao.totais.c - alvo.c) / alvo.c;
+                    }
+                }
+
+                if (solucao.erro.p <= tolerancia &&
+                    solucao.erro.g <= tolerancia &&
+                    solucao.erro.c <= tolerancia) {
+                    solucao.valido = true;
+                }
+
+                return solucao;
+            }
+
+            // Fallback final
+            return {
+                quantidades: {},
+                totais: { p: 0, g: 0, c: 0 },
+                erro: { p: 1, g: 1, c: 1 },
+                valido: false,
+                adicionados: [],
+                quantidadesFixas: quantidadesEspecificas,
+                alimentosInutilizaveis
+            };
+        }
+
+        function getDesvioClass(desvio) {
+            const percentual = desvio * 100;
+            if (percentual <= 5) return 'desvio-excelente';
+            if (percentual <= 10) return 'desvio-aceitavel';
+            return 'desvio-ruim';
+        }
+
+        function mostrarResultado(resultado, macroAlvo, indexRefeicao, nomeRefeicao) {
+            const container = document.getElementById('resultadoOtimizado');
+
+            // Contar ingredientes com quantidade > 0
+            const temIngredientes = Object.entries(resultado.quantidades)
+                .some(([key, qtd]) => qtd > 0 && alimentos[key]);
+
+            // Se não há ingredientes na solução, mas há alimentos inutilizáveis: explicar
+            if (!temIngredientes) {
+                let htmlErro = '<div class="observacao-box">';
+                htmlErro += '<strong>⚠️ Não foi possível montar a refeição com os ingredientes selecionados.</strong><br><br>';
+                
+                if (resultado.alimentosInutilizaveis && resultado.alimentosInutilizaveis.length > 0) {
+                    for (const alim of resultado.alimentosInutilizaveis) {
+                        const unidade = alim.divisivel ? ' gramas' : (alim.min > 1 ? ' unidades' : ' unidade');
+                        htmlErro += `➡️ Não foi possível incluir <strong>${alim.nome}</strong> porque não atenderia a medida mínima desse alimento, que é de ${alim.min}${unidade}, ao mesmo tempo em que respeitaria o limite das macros desta refeição.<br><br>`;
+                    }
+                    htmlErro += '💡 <strong>Sugestão:</strong> selecione outros ingredientes, ou combine com alimentos de menor densidade de macro (ex.: batata, pão, frango magro).';
+                } else {
+                    htmlErro += 'Tente selecionar mais ingredientes ou uma combinação diferente.';
+                }
+                htmlErro += '</div>';
+                container.innerHTML = htmlErro;
+                return;
+            }
+
+            let html = '<div class="resultado-box">';
+            html += '<h3>📦 Ingredientes:</h3>';
+
+            const observacoes = [];
+
+            for (const [key, quantidade] of Object.entries(resultado.quantidades)) {
+                if (quantidade > 0 && quantidade !== null && quantidade !== undefined) {
+                    const alimento = alimentos[key];
+                    if (!alimento) continue;
+
+                    let qtdTexto;
+                    if (!alimento.divisivel) {
+                        qtdTexto = `${quantidade} ${alimento.unidade}`;
+                    } else {
+                        qtdTexto = `${quantidade.toFixed(0)} ${alimento.unidade}`;
+                    }
+                    html += `<div class="resultado-item">
+                        <div class="resultado-item-nome">${alimento.nome}:</div>
+                        <div class="resultado-item-quantidade">${qtdTexto}</div>
+                    </div>`;
+                }
+            }
+
+            if (resultado.adicionados.includes('whey_vegano_protein')) {
+                observacoes.push('✅ Whey vegano foi incluído para atingir a meta de proteína.');
+            }
+            if (resultado.adicionados.includes('azeite')) {
+                observacoes.push('✅ Azeite foi incluído para atingir a meta de gordura.');
+            }
+
+            // Adicionar observações de alimentos que não puderam ser incluídos
+            if (resultado.alimentosInutilizaveis && resultado.alimentosInutilizaveis.length > 0) {
+                for (const alim of resultado.alimentosInutilizaveis) {
+                    const unidade = alim.divisivel ? ' gramas' : (alim.min > 1 ? ' unidades' : ' unidade');
+                    observacoes.push(`⚠️ Não foi possível incluir ${alim.nome} porque não atenderia a medida mínima desse alimento, que é de ${alim.min}${unidade}, ao mesmo tempo em que respeitaria o limite das macros desta refeição.`);
+                }
+            }
+
+            html += '</div>';
+
+            html += '<div class="resultado-box" style="background: linear-gradient(135deg, #51cf66 0%, #4caf50 100%);">';
+            html += '<h3>📊 Macros Alcançados:</h3>';
+
+            const erroP = resultado.erro.p;
+            const erroG = resultado.erro.g;
+            const erroC = resultado.erro.c;
+
+            html += '<div class="macro-info">';
+            html += `<div class="macro-info-item">
+                <div class="macro-info-valor">
+                    <span><strong>Proteína:</strong> ${resultado.totais.p.toFixed(1)}g (alvo: ${macroAlvo.p.toFixed(1)}g)</span>
+                </div>
+                <div class="macro-info-desvio ${getDesvioClass(erroP)}">${(erroP * 100).toFixed(1)}%</div>
+            </div>`;
+            html += `<div class="macro-info-item">
+                <div class="macro-info-valor">
+                    <span><strong>Gordura:</strong> ${resultado.totais.g.toFixed(1)}g (alvo: ${macroAlvo.g.toFixed(1)}g)</span>
+                </div>
+                <div class="macro-info-desvio ${getDesvioClass(erroG)}">${(erroG * 100).toFixed(1)}%</div>
+            </div>`;
+            html += `<div class="macro-info-item">
+                <div class="macro-info-valor">
+                    <span><strong>Carbos:</strong> ${resultado.totais.c.toFixed(1)}g (alvo: ${macroAlvo.c.toFixed(1)}g)</span>
+                </div>
+                <div class="macro-info-desvio ${getDesvioClass(erroC)}">${(erroC * 100).toFixed(1)}%</div>
+            </div>`;
+            html += '</div>';
+
+            if (resultado.valido) {
+                html += '<p style="margin-top: 10px; font-size: 0.85em; opacity: 0.9; color: #fff;">✅ Solução dentro da tolerância de ±5%!</p>';
+            } else {
+                const maxDesvio = Math.max(erroP, erroG, erroC);
+                if (maxDesvio <= 0.075) {
+                    html += '<p style="margin-top: 10px; font-size: 0.85em; opacity: 0.9; color: #fff;">⚠️ Solução aproximada (máximo desvio: ' + (maxDesvio * 100).toFixed(1) + '%).</p>';
+                } else {
+                    html += '<p style="margin-top: 10px; font-size: 0.85em; opacity: 0.9; color: #ffeb3b;">❌ Solução fora da tolerância.</p>';
+                }
+            }
+
+            html += '</div>';
+
+            if (observacoes.length > 0) {
+                html += '<div class="observacao-box">' + observacoes.join('<br>') + '</div>';
+            }
+
+            container.innerHTML = html;
+
+            if (!isNaN(indexRefeicao) && nomeRefeicao) {
+                salvarRefeicaoNoPlano(indexRefeicao, nomeRefeicao, resultado, macroAlvo);
+            }
+        }
+
+        function criarTabelaProjecao() {
+            const peso = usuarioPerfil.peso || 60;
+            const tbody = document.getElementById('corpoTabelaProjecao');
+            tbody.innerHTML = '';
+
+            // Mostrar TODAS as 52 semanas
+            for (let i = 0; i < projecaoDados.length; i++) {
+                const dado = projecaoDados[i];
+                const perdaAcumulada = dado.perda;
+                const perdaAnterior = i > 0 ? projecaoDados[i-1].perda : 0;
+                const perdaSemanalPct = perdaAcumulada - perdaAnterior;
+                const pesoEsperado = peso * (1 - perdaAcumulada / 100);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${dado.semana}</td>
+                    <td>${perdaSemanalPct.toFixed(2)}%</td>
+                    <td>${perdaAcumulada.toFixed(2)}%</td>
+                    <td>${pesoEsperado.toFixed(2)}</td>
+                    <td style="text-align: left; font-size: 0.85em;">${dado.fase}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+
+            atualizarGraficoProjecao(peso);
+        }
+
+        function atualizarGraficoProjecao(peso) {
+            const dados = [];
+            const labels = [];
+
+            // Incluir TODAS as 52 semanas no gráfico sem pular
+            for (const dado of projecaoDados) {
+                dados.push(peso * (1 - dado.perda / 100));
+                labels.push(`${dado.semana}`);
+            }
+
+            // Mapear o histórico de peso real (registrado pelo usuário) para o eixo de 52 semanas
+            const dadosReais = projecaoDados.map(dado => {
+                const registro = historicoPeso.find(h => h.semana === dado.semana);
+                return registro ? registro.peso : null;
+            });
+            const temPesoReal = historicoPeso.length > 0;
+
+            const ctx = document.getElementById('chartProjecao').getContext('2d');
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            const datasets = [{
+                label: 'Projeção teórica (kg)',
+                data: dados,
+                borderColor: '#4472C4',
+                backgroundColor: 'rgba(68, 114, 196, 0.1)',
+                borderWidth: 1.5,
+                tension: 0.1,
+                fill: true,
+                pointRadius: 1.5,
+                pointBackgroundColor: '#4472C4',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 0
+            }];
+
+            if (temPesoReal) {
+                datasets.push({
+                    label: 'Peso real registrado (kg)',
+                    data: dadosReais,
+                    borderColor: '#51cf66',
+                    backgroundColor: 'rgba(81, 207, 102, 0.15)',
+                    borderWidth: 2,
+                    tension: 0.1,
+                    fill: false,
+                    spanGaps: true,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#51cf66',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1
+                });
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: true, position: 'top' },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.parsed.y === null || context.parsed.y === undefined) return null;
+                                    return context.dataset.label + ': ' + context.parsed.y.toFixed(2) + ' kg';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value) {
+                                    return value.toFixed(1) + ' kg';
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 0,
+                                minRotation: 0,
+                                // Mostrar labels a cada 5 semanas para não congestionar
+                                callback: function(value, index) {
+                                    if (index % 5 === 0 || index === projecaoDados.length - 1) {
+                                        return 'S' + value;
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
